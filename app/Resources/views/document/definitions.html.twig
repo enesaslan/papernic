@@ -1,0 +1,117 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if success is defined and success is not null and success == true %}
+        <div class="nNote nSuccess">
+            <p>{{ 'action_success'|trans }}</p>
+        </div>
+    {% endif %}
+
+    {% if success is defined and success is not null and success == false %}
+        <div class="nNote nFailure">
+            <p>{{ 'action_error'|trans }}</p>
+        </div>
+    {% endif %}
+
+    <div class="fluid">
+
+        <div class="widget grid6">
+            <div class="whead"><h6><span class="icon-publish"></span>{{ 'document_types'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+                <div class="searchLine" style="margin-top: 5px;">
+                    <form action="{{ path('document_type_add') }}" method="post">
+                        <input type="text" name="doc_type" id="doc_type" placeholder="{{ 'add_new_document_type'|trans }}" class="ac ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" required/>
+                        <button type="submit" name="btnDocTypeAdd" id="btnDocTypeAdd" value="1">
+                            <span class="icos-add" style="margin: 6px 6px 6px 8px; padding: 0;"></span></button>
+                    </form>
+                </div>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
+                <thead>
+                <tr>
+                    <td>{{ 'type'|trans }}</td>
+                    <td>{{ 'actions'|trans }}</td>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if type_list|length %}
+
+                    {% for t in type_list %}
+                        <tr>
+                            <td class="center-text">{{ t.documentType }}</td>
+                            <td class="center-text">
+                                <a href="javascript:void(0);" onclick="var res = prompt('{{ 'edit'|trans }}', '{{ t.documentType }}'); if ( res != '') {  location.href = '{{ path('document_type_edit', {'document_type_id': t.documentTypeId, 'value': '0x0x0x'}) }}'.replace('0x0x0x', res); }" class="tablectrl_medium bLightBlue tipS" original-title="{{ 'edit'|trans }}">{{ 'edit'|trans }}</a>
+                                <a href="JavaScript:void(0);" onClick="if (confirm('{{ 'are_you_sure'|trans }}')) { location.href = '{{ path('document_type_delete', {'document_type_id': t.documentTypeId}) }}'; }" class="tablectrl_medium bRed tipS" original-title="{{ 'delete'|trans }}">{{ 'delete'|trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div style="text-align: center; padding: 20px 0;">{{ 'no_records_found'|trans }}</div>
+
+                {% endif %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="widget grid6">
+            <div class="whead"><h6><span class="icon-publish"></span>{{ 'document_categories'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+                <div class="searchLine" style="margin-top: 5px;">
+                    <form action="{{ path('document_category_add') }}" method="post">
+                        <input type="text" name="doc_category" id="doc_category" placeholder="{{ 'add_new_document_category'|trans }}" class="ac ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" required/>
+                        <button type="submit" name="btnDocCategoryAdd" id="btnDocCategoryAdd" value="1">
+                            <span class="icos-add" style="margin: 6px 6px 6px 8px; padding: 0;"></span></button>
+                    </form>
+                </div>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
+                <thead>
+                <tr>
+                    <td>{{ 'category'|trans }}</td>
+                    <td>{{ 'actions'|trans }}</td>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if category_list|length %}
+
+                    {% for t in category_list %}
+                        <tr>
+                            <td class="center-text">{{ t.documentCategory }}</td>
+                            <td class="center-text">
+                                <a href="javascript:void(0);" onclick="var res = prompt('{{ 'edit'|trans }}', '{{ t.documentCategory }}'); if ( res != '') {  location.href = '{{ path('document_category_edit', {'document_category_id': t.documentCategoryId, 'value': '0x0x0x'}) }}'.replace('0x0x0x', res); }" class="tablectrl_medium bLightBlue tipS" original-title="{{ 'edit'|trans }}">{{ 'edit'|trans }}</a>
+                                <a href="JavaScript:void(0);" onClick="if (confirm('{{ 'are_you_sure'|trans }}')) { location.href = '{{ path('document_category_delete', {'document_category_id': t.documentCategoryId}) }}'; }" class="tablectrl_medium bRed tipS" original-title="{{ 'delete'|trans }}">{{ 'delete'|trans }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div style="text-align: center; padding: 20px 0;">{{ 'no_records_found'|trans }}</div>
+
+                {% endif %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+{% endblock %}

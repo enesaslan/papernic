@@ -1,0 +1,205 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if app.session.get('demo') == false %}
+        <form name="user_view_form" id="user_view_form" action="{{ path('admin_user_view', {'user_id': user.userId}) }}" method="post">
+    {% endif %}
+
+    <div class="fluid">
+
+        <div class="widget grid8" style="padding-bottom: 15px;">
+            <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_details'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'username'|trans }} <span class="kirmizi">*</span></label>
+                    <input type="text" name="user_name" id="user_name" placeholder="{{ 'username'|trans }}" value="{{ user.userName }}"/>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'full_name'|trans }} <span class="kirmizi">*</span></label>
+                    <input type="text" name="full_name" id="full_name" placeholder="{{ 'full_name'|trans }}" value="{{ user.fullName }}"/>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'password'|trans }} <span class="kirmizi">*</span></label>
+                    <input type="password" name="password1" id="password1" value="temppass" required/>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'password'|trans }} ({{ 'confirm'|trans }}) <span class="kirmizi">*</span></label>
+                    <input type="password" name="password2" id="password2" value="temppass" required/>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'email'|trans }}</label>
+                    <input type="text" name="email" id="email" placeholder="{{ 'email'|trans }}" value="{{ opt.smtp_email }}"/>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'smtp_host'|trans }}</label>
+                    <input type="text" name="smtp_host" id="smtp_host" placeholder="{{ 'smtp_host'|trans }}" value="{{ opt.smtp_host_name }}"/>
+                </div>
+
+                <div class="clear" style="margin: 10px 0;"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'smtp_user_name'|trans }}</label>
+                    <input type="text" name="smtp_user_name" id="smtp_user_name" placeholder="{{ 'smtp_user_name'|trans }}" value="{{ opt.smtp_user_name }}"/>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'smtp_password'|trans }}</label>
+                    <input type="password" name="smtp_password" id="smtp_password" placeholder="{{ 'smtp_password'|trans }}" value="{{ opt.smtp_password }}"/>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid3">
+                    <label>{{ 'smtp_port'|trans }}</label>
+                    <input type="text" name="smtp_port" id="smtp_port" placeholder="{{ 'smtp_port'|trans }}" value="{{ opt.smtp_port }}"/>
+                </div>
+
+                <div class="grid3">
+                    <label>{{ 'smtp_auth_type'|trans }}</label>
+                    <select name="smtp_auth_mode">
+                        <option value="login" {% if opt.smtp_auth_mode == 'login' %} selected="selected" {% endif %}>Login</option>
+                        <option value="plain" {% if opt.smtp_auth_mode == 'plain' %} selected="selected" {% endif %}>Plain</option>
+                        <option value="cram-md5" {% if opt.smtp_auth_mode == 'cram-md5' %} selected="selected" {% endif %}>Cram-MD5</option>
+                        <option value="" {% if opt.smtp_auth_mode == '' %} selected="selected" {% endif %}>None</option>
+                    </select>
+                </div>
+
+                <div class="grid3">
+                    <label>{{ 'smtp_encryption'|trans }}</label>
+                    <select name="smtp_encryption">
+                        <option value="" {% if opt.smtp_encryption == '' %} selected="selected" {% endif %}>None</option>
+                        <option value="ssl" {% if opt.smtp_encryption == 'ssl' %} selected="selected" {% endif %}>SSL</option>
+                        <option value="tls" {% if opt.smtp_encryption == 'tls' %} selected="selected" {% endif %}>TLS</option>
+                    </select>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+        </div>
+
+        <div class="widget grid4" style="background: url('/images/bg-lock.png') top right no-repeat;">
+            <div class="whead"><h6><span class="icon-locked"></span>{{ 'privileges'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="body" style="line-height: 28px;">
+
+                <label>{{ 'role'|trans }}</label>
+                <br/>
+                <select name="role" style="margin-bottom: 15px;" {% if app.session.get('user_id') == user.userId %} disabled="disabled" {% endif %}>
+                    <option value="user" {% if opt.is_admin == false %} selected="selected" {% endif %}>{{ 'user'|trans }}</option>
+                    <option value="admin" {% if opt.is_admin == true %} selected="selected" {% endif %}>{{ 'admin'|trans }}</option>
+                </select>
+
+                <div class="clear"></div>
+
+                <label>
+                    <input type="checkbox" name="priv_document_edit" value="true" {% if opt.priv_document_edit == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_document_edit'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_document_delete" value="true" {% if opt.priv_document_delete == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_document_delete'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_contact_edit" value="true" {% if opt.priv_contact_edit == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_contact_edit'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_contact_delete" value="true" {% if opt.priv_contact_delete == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_contact_delete'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_file_upload" value="true" {% if opt.priv_file_upload == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_file_upload'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_file_download" value="true" {% if opt.priv_file_download == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_file_download'|trans }}
+                </label>
+
+                <br/>
+
+                <label>
+                    <input type="checkbox" name="priv_file_delete" value="true" {% if opt.priv_file_delete == true %} checked="checked" {% endif %} class="chkBox"/>
+                    {{ 'priv_file_delete'|trans }}
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% if app.session.get('demo') == false %}
+        <input type="submit" name="btn_user_update" id="btn_user_update" class="buttonM bRed btn_bottom" value="{{ 'save_user_details'|trans }}"/>
+    {% endif %}
+
+    <input type="button" onclick="location.href='{{ path('admin_user_list') }}';" class="buttonM bLightBlue btn_bottom" value="{{ 'cancel'|trans }}"/>
+
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#user_add_form').submit(function () {
+                if ($("#password1").val() != $("#password2").val()) {
+                    alert('{{ 'password_not_match'|trans }}');
+                    return false;
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+

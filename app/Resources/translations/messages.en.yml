@@ -1,0 +1,155 @@
+user_login: User Login
+username: Username
+password: Password
+login: Login
+all_fields_required: All fields are required
+fields_marked_red_required: Fields marked with a red * are required
+remember_me: Remember me
+company_id: Company ID
+user_login_failed: Error: Login failed.
+dashboard: Dashboard
+app_slogan: Document Management & Collaboration System
+logout: Logout
+logged_in: Logged in:
+contact_details: Contact Details
+individual: Individual
+corporate: Corporate
+contact_type: Contact Type
+contact_name: Contact Name
+save_contact: Save Contact
+email: E-mail
+phone: Phone
+gsm: GSM
+citizenship_no: Citizenship No
+tax_id: Tax ID
+tax_office: Tax Office
+web: Web
+im: Instant Messaging ID
+fax: Fax
+country: Country
+address: Address
+notes: Notes
+cancel: Cancel
+contact_list: Contact List
+action_success: Your request has been successfully processed.
+action_error: An error has occurred while processing your request.
+contact: Contact
+contacts: Contacts
+add_contact: Add Contact
+no_records_found: No records found.
+records_found: record(s) found.
+are_you_sure: Are you sure you want to perform this action?
+delete: Delete
+type: Type
+name: Name
+actions: Actions
+go_to_page: Go to page
+customer_login_id: Customer ID
+quick_search_contacts: Quick Search Contacts
+documents: Documents
+add_document: Add Document
+document_list: Document List
+document_details: Document Details
+document_subject: Document Subject
+document_no: Document No
+save_document: Save Document
+document_date: Document Date
+expiry_date: Expiry Date
+filing_cabinet_no: Filing Cabinet No
+from_contact: From Contact
+to_contact: To Contact
+choose: Choose...
+document_type: Document Type
+document_category: Document Category
+no: No
+subject: Subject
+type: Type
+category: Category
+edit: Edit
+files: Files
+upload_files: Select File(s) to Upload
+file_name: File Name
+size: Size
+date_added: Date Added
+timestamp: Timestamp
+uploaded_by: Uploaded by
+files_uploading: Please wait while uploading your files...
+files_uploading_done: Upload complete!
+error_occurred: An error has occurred while processing your request
+search_filters_active: Warning: Search filters are active.
+clear_search_filters: Click here to clear search filters to display all results
+write_dashboard: Write a message to dashboard
+send: Send
+recent_activities: Recent Activities
+send_dashboard: Send message to dashboard
+quick_search_documents: Quick Search Documents
+has_added_document: has added document
+demo_warning_1: Warning! You are using PUBLIC DEMO of PaperNIC.
+demo_warning_2: We are not responsible for any user generated content.
+disk_usage_details: Disk usage details
+used: Used
+limit: Limit
+percent: Percent
+definitions: Definitions
+document_types: Document Types
+document_categories: Document Categories
+add_new_document_type: Add new document type
+add_new_document_category: Add new document category
+attached_files: Attached Files
+user_profile: User Profile
+your_privileges: Your Privileges
+priv_document_edit: Edit document details
+priv_document_delete: Delete documents
+priv_contact_edit: Edit contact details
+priv_contact_delete: Delete contacts
+priv_file_upload: Upload files
+priv_file_download: Download files
+priv_file_delete: Delete files
+role: Role
+user: User
+admin: Administrator
+your_details: Your Details
+full_name: Full Name
+smtp_host: SMTP Host
+smtp_user_name: SMTP Username
+smtp_password: SMTP Password
+hidden: Hidden
+smtp_port: SMTP Port
+smtp_use_auth: SMTP Use Auth
+smtp_use_ssl: SMTP Use SSL
+yes: Yes
+mb_loaded: MB loaded
+send_via_email: Send via E-mail
+loading: Loading
+please_wait: Please wait
+to: To
+message: Message
+send: Send
+smtp_not_defined: Your SMTP details are not defined.
+contact_admin: Please contact your administrator.
+account_details: Account Details
+system_users: System Users
+management: Management
+unauth_access: Unauthorized: Access is denied due to invalid credentials.
+last_seen: Last Seen
+user_details: User Details
+privileges: Privileges
+confirm: Confirm
+smtp_auth_type: SMTP Auth Mode
+smtp_encryption: SMTP Encryption
+save_user_details: Save User Details
+user_limit_reached: Can not add new user. Maximum number of users exceeded.
+add_new_user: Add New System User
+password_not_match: Password doesn't match confirmation.
+add_new: Add New
+show: Show
+secure_connection: Secure Connection
+send_email: Send E-mail
+compose_email: Compose E-mail
+send_all_via_email: Send all via e-mail
+menu: Menu
+ie_emails: Separate with semicolon: user1@example.com; user2@example.com
+start: Start
+end: End
+optional: Optional
+reset_sort_order: Reset Sort Order

@@ -1,0 +1,170 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if success is defined and success is not null and success == true %}
+        <div class="nNote nSuccess">
+            <p>{{ 'action_success'|trans }}</p>
+        </div>
+    {% endif %}
+
+    {% if success is defined and success is not null and success == false %}
+        <div class="nNote nFailure">
+            <p>{{ 'action_error'|trans }}</p>
+        </div>
+    {% endif %}
+
+    {% if app.session.has('document_filter') %}
+        <div class="nNote nWarning" onclick="location.href='{{ path('document_search', {'clear': 'clear'}) }}';">
+            <p>
+                <span style="font-weight: normal;">{{ 'search_filters_active'|trans }}</span>
+                <br/>
+                <strong>{{ 'clear_search_filters'|trans }}</strong>
+            </p>
+        </div>
+    {% endif %}
+
+    <div class="fluid">
+
+        <div class="widget grid12">
+            <div class="whead"><h6><span class="icon-list_nested"></span>{{ 'document_list'|trans }}</h6>
+                <div class="titleOpt">
+                    <a href="#" data-toggle="dropdown"><span class="icos-arrowdown"></span><span class="clear"></span></a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="{{ path('documents_sort', {'column': 'document.date_added', 'dir': 'desc'}) }}"><span class="icos-listimg"></span>{{ 'reset_sort_order'|trans }}</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
+                <thead>
+                <tr>
+                    <td style="width: 20px;"></td>
+                    {% if app.session.get('document_sort_dir') == 'asc' %}
+                        {% set dir = 'desc' %}
+                    {% else %}
+                        {% set dir = 'asc' %}
+                    {% endif %}
+                    <td class="curHand" style="border-left: 0;" onClick="location.href='{{ path('documents_sort', {'column': 'document.document_subject', 'dir': dir}) }}';">
+                        {% if app.session.get('document_sort_column') == 'document.document_subject' and app.session.get('document_sort_dir') == 'desc' %}
+                            <span class="icon-arrow-down"></span>
+                        {% endif %}
+                        {% if app.session.get('document_sort_column') == 'document.document_subject' and app.session.get('document_sort_dir') == 'asc' %}
+                            <span class="icon-arrow-up"></span>
+                        {% endif %}
+                        <a href="{{ path('documents_sort', {'column': 'document.document_subject', 'dir': dir}) }}" class="pastelRed">{{ 'subject'|trans }}</a>
+                    </td>
+                    <td class="curHand" onClick="location.href='{{ path('documents_sort', {'column': 'type.document_type', 'dir': dir}) }}';">
+                        {% if app.session.get('document_sort_column') == 'type.document_type' and app.session.get('document_sort_dir') == 'desc' %}
+                            <span class="icon-arrow-down"></span>
+                        {% endif %}
+                        {% if app.session.get('document_sort_column') == 'type.document_type' and app.session.get('document_sort_dir') == 'asc' %}
+                            <span class="icon-arrow-up"></span>
+                        {% endif %}
+                        <a href="{{ path('documents_sort', {'column': 'type.document_type', 'dir': dir}) }}" class="pastelRed">{{ 'type'|trans }}</a>
+                    </td>
+                    <td class="curHand" onClick="location.href='{{ path('documents_sort', {'column': 'category.document_category', 'dir': dir}) }}';">
+                        {% if app.session.get('document_sort_column') == 'category.document_category' and app.session.get('document_sort_dir') == 'desc' %}
+                            <span class="icon-arrow-down"></span>
+                        {% endif %}
+                        {% if app.session.get('document_sort_column') == 'category.document_category' and app.session.get('document_sort_dir') == 'asc' %}
+                            <span class="icon-arrow-up"></span>
+                        {% endif %}
+                        <a href="{{ path('documents_sort', {'column': 'category.document_category', 'dir': dir}) }}" class="pastelRed">{{ 'category'|trans }}</a>
+                    </td>
+                    <td class="curHand" onClick="location.href='{{ path('documents_sort', {'column': 'contact.contact_name', 'dir': dir}) }}';">
+                        {% if app.session.get('document_sort_column') == 'contact.contact_name' and app.session.get('document_sort_dir') == 'desc' %}
+                            <span class="icon-arrow-down"></span>
+                        {% endif %}
+                        {% if app.session.get('document_sort_column') == 'contact.contact_name' and app.session.get('document_sort_dir') == 'asc' %}
+                            <span class="icon-arrow-up"></span>
+                        {% endif %}
+                        <a href="{{ path('documents_sort', {'column': 'contact.contact_name', 'dir': dir}) }}" class="pastelRed">{{ 'from_contact'|trans }}</a>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if total > 0 %}
+
+                    {% for l in list %}
+                        <tr>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="tablectrl_small bLightBlue" data-toggle="dropdown"><span class="icon-curved_arrow" style="margin-right: 1px; line-height: 12px;"></span></a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);" class="a-send-email" data-document-id="{{ l.document_document_id }}"><span class="icos-email"></span>{{ 'send_via_email'|trans }}
+                                            </a>
+                                        </li>
+                                        {% if app.session.get('user_options').priv_document_delete == true %}
+                                            <li>
+                                                <a href="javascript:void(0);" onClick="if (confirm('{{ 'are_you_sure'|trans }}')) { location.href = '{{ path('document_delete', {'document_id': l.document_document_id}) }}'; }"><span class="icos-trash"></span>{{ 'delete'|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td style="border-left: 0;" class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">
+                                <a href="{{ path('document_view', {'document_id': l.document_document_id}) }}">{{ l.document_document_subject }}</a>
+                            </td>
+                            <td class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">{{ l.type_document_type }}</td>
+                            <td class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">{{ l.category_document_category }}</td>
+                            <td class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">{{ l.contact_contact_name }}</td>
+                        </tr>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div style="text-align: center; padding: 20px 0;">{{ 'no_records_found'|trans }}</div>
+
+                {% endif %}
+
+                </tbody>
+            </table>
+
+            <div class="fg-toolbar tableFooter">
+                <div class="dataTables_info" id="DataTables_Table_0_info">
+                    <strong>{{ total }}</strong> {{ 'records_found'|trans }}
+                </div>
+                <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_0_paginate">
+                    {{ 'go_to_page'|trans }} &nbsp;
+                    <select name="select_page" id="select_page">
+                        {% for i in 1..pageCount %}
+                            {% if i == page %}
+                                {% set sel = ' selected="selected" ' %}
+                            {% else %}
+                                {% set sel = '' %}
+                            {% endif %}
+                            <option {{ sel }} value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').on('click', '.a-send-email', function () {
+                var dialog1 = $("#email_dialog").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 630
+                });
+
+                var eUrl = '{{ path('compose_email', {'type': 'document', 'entity_id': '000'}) }}';
+                dialog1.load(eUrl.replace('000', $(this).data('document-id'))).dialog('open');
+
+            });
+        });
+    </script>
+
+{% endblock %}

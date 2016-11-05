@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="alternate" hreflang="en" href="https://panel.papernic.com/en/"/>
+    <link rel="alternate" hreflang="tr" href="https://panel.papernic.com/tr/"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>{% block title %}{% endblock %} - {{ app_name }}</title>
+    <link href="{{ asset('css/styles.min.css') }}" rel="stylesheet" type="text/css"/>
+    <!--[if IE]>
+    <link href="{{ asset('css/ie.min.css') }}" rel="stylesheet" type="text/css">
+    <![endif]-->
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/ui/jquery.breadcrumbs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/files/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/files/functions.min.js') }}"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}"/>
+</head>
+
+<body>
+<div id="sidebar">
+
+    <div class="secNav">
+        <div class="secWrapper">
+            <div class="secTop">
+                <div class="balance">
+                    <div class="balInfo">
+                        {{ 'logged_in'|trans }} {{ app.session.get('user_full_name') }}
+                        <br/>
+                        <span>{{ 'username'|trans }}: {{ app.session.get('user_name') }}</span>
+                    </div>
+                </div>
+                <a href="#" id="triangle-red" class="triangle-red"></a>
+            </div>
+
+            <div id="tab-container" class="tab-container">
+
+                <div id="general">
+
+                    <div class="numStats">
+                        <ul>
+                            <li>
+                                <a href="{{ path('document_list') }}" title="">{{ app.session.get('document_count') }}</a><span>{{ 'documents'|trans }}</span>
+                            </li>
+                            <li>
+                                <a href="{{ path('document_list') }}" title="">{{ app.session.get('file_count') }}</a><span>{{ 'files'|trans }}</span>
+                            </li>
+                            <li class="last">
+                                <a href="{{ path('contact_list') }}" title="">{{ app.session.get('contact_count') }}</a><span>{{ 'contacts'|trans }}</span>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="divider"><span></span></div>
+
+                    <form name="quick_contact_search_form" id="quick_contact_search_form" method="post" action="{{ path('contact_search') }}">
+                        <div class="searchLine">
+                            <select name="contact_filter_column" id="contact_filter_column" class="leftSelect">
+                                <option value="contact_filter_name" selected="selected">{{ 'contact_name'|trans }}</option>
+                                <option value="contact_filter_email">{{ 'email'|trans }}</option>
+                                <option value="contact_filter_phone">{{ 'phone'|trans }}</option>
+                                <option value="contact_filter_gsm">{{ 'gsm'|trans }}</option>
+                                <option value="contact_filter_citizenship_no">{{ 'citizenship_no'|trans }}</option>
+                                <option value="contact_filter_tax_id">{{ 'tax_id'|trans }}</option>
+                                <option value="contact_filter_address">{{ 'address'|trans }}</option>
+                                <option value="contact_filter_notes">{{ 'notes'|trans }}</option>
+                            </select>
+                        </div>
+                        <div class="searchLine" style="width: 88%; margin: 10px auto;">
+                            <input type="text" name="contact_filter_value" placeholder="{{ 'quick_search_contacts'|trans }}" required/>
+                            <button type="submit" name="btn_quick_contact_search" value="1">
+                                <span class="icos-search"></span></button>
+                        </div>
+                    </form>
+
+                    <div class="divider"><span></span></div>
+
+                    {{ render(controller('AppBundle:Document:sidebarSearch')) }}
+
+                    <div class="divider"><span></span></div>
+
+                    {{ render(controller('AppBundle:User:userList')) }}
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div id="content">
+    <div class="contentTop">
+        <span class="pageTitle">
+           <img id="panel-logo" src="{{ asset('images/panel_logo.png') }}"/>
+            <span id="app-slogan">{{ 'app_slogan'|trans }}</span>
+        </span>
+        <ul class="quickStats">
+            <li>
+                <a href="{{ path('logout') }}" class="redImg"><img src="{{ asset('images/icons/quickstats/user.png') }}" alt=""/></a>
+                <div class="floatR" style="line-height: 30px;">
+                    {% if app.session.get('demo') == true %}
+                        <a href="{{ path('demo') }}"><strong class="blue">{{ 'logout'|trans }}</strong></a>
+                    {% else %}
+                        <a href="{{ path('logout') }}"><strong class="blue">{{ 'logout'|trans }}</strong></a>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+    <div class="breadLine">
+
+        <div class="bc">
+            <ul id="breadcrumbs" class="breadcrumbs">
+                <li><a href="#" class="compose-new-email"><span class="icon-email"></span> {{ 'compose_email'|trans }}
+                    </a></li>
+            </ul>
+        </div>
+
+        <div class="breadLinks">
+            <ul>
+                <li id="menu-button">
+                    <a href="#" style="padding-left: 1px;"><i class="icos-settings2"></i><span class="pastelRed">{{ 'menu'|trans }}</span></a>
+                </li>
+
+                <li>
+                    <a id="a-dashboard" href="{{ path('dashboard') }}" title="{{ 'dashboard'|trans }}"><i class="icos-list"></i><span>{{ 'dashboard'|trans }}</span></a>
+                </li>
+
+                <li class="has">
+                    <a title="">
+                        <i class="icos-documents"></i>
+                        <span>{{ 'documents'|trans }}</span>
+                        <span><img src="{{ asset('images/elements/control/hasddArrow.png') }}" alt=""/></span>
+                        <strong>({{ app.session.get('document_count') }})</strong>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ path('document_add') }}" title=""><span class="icos-add"></span>{{ 'add_document'|trans }}
+                            </a></li>
+                        <li>
+                            <a href="{{ path('document_list') }}" title=""><span class="icos-archive"></span>{{ 'document_list'|trans }}
+                            </a></li>
+                        <li>
+                            <a href="{{ path('document_definitions') }}" title=""><span class="icos-pencil"></span>{{ 'definitions'|trans }}
+                            </a></li>
+                    </ul>
+                </li>
+
+                <li class="has">
+                    <a title="">
+                        <i class="icos-users"></i>
+                        <span>{{ 'contacts'|trans }}</span>
+                        <span><img src="{{ asset('images/elements/control/hasddArrow.png') }}" alt=""/></span>
+                        <strong>({{ app.session.get('contact_count') }})</strong>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ path('contact_add') }}" title=""><span class="icos-add"></span>{{ 'add_contact'|trans }}
+                            </a></li>
+                        <li>
+                            <a href="{{ path('contact_list') }}" title=""><span class="icos-archive"></span>{{ 'contact_list'|trans }}
+                            </a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="{{ path('user_profile_view') }}" title=""><i class="icos-cog4"></i><span>{{ 'user_profile'|trans }}</span></a>
+                </li>
+
+                {% if app.session.get('user_options').is_admin == true %}
+
+                    <li class="has">
+                        <a title="">
+                            <i class="icos-link"></i>
+                            <span>{{ 'management'|trans }}</span>
+                            <span><img src="{{ asset('images/elements/control/hasddArrow.png') }}" alt=""/></span>
+                        </a>
+                        <ul>
+                            <!--
+                        <li>
+                            <a href="" title=""><span class="icos-imac"></span>{{ 'account_details'|trans }}</a>
+                        </li>
+                        -->
+                            <li>
+                                <a href="{{ path('admin_user_list') }}" title=""><span class="icos-locked"></span>{{ 'system_users'|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-4176349-17', 'auto');
+    ga('send', 'pageview');
+
+    $(document).ready(function () {
+
+        {% if app.session.get('user_options').date_format == '' %}
+
+        jQuery.ajax({
+            url: '{{ path('user_dateformat_update') }}',
+            type: 'POST',
+            data: {
+                date_format: df
+            }
+        });
+
+        {% endif %}
+
+        $.datepicker.setDefaults($.datepicker.regional['{{ app.request.locale }}']);
+
+        $('.compose-new-email').click(function () {
+            var dialog1 = $("#email_dialog").dialog({
+                autoOpen: false,
+                height: 400,
+                width: 630
+            });
+
+            dialog1.load('{{ path('compose_email') }}').dialog('open');
+        });
+
+        $('#menu-button, #triangle-red').click(function () {
+            if ($('#sidebar').is(':visible')) {
+                $('#sidebar').hide("fast");
+                $('#content').css("margin-left", "0");
+                $('#menu-button').show("slow");
+                $('#a-dashboard').css("padding-left", "12px");
+            } else {
+                $('#sidebar').show("fast");
+                $('#menu-button').hide("fast");
+                $('#a-dashboard').css("padding-left", "0");
+            }
+        });
+
+    });
+
+</script>
+
+<div id="email_dialog" title="{{ 'compose_email'|trans }}" style="display: none;">
+    <div class="center-text" style="margin-top: 100px;;">
+        <strong>{{ 'loading'|trans }}...</strong>
+        <br/>
+        <p>{{ 'please_wait'|trans }}...</p>
+    </div>
+</div>
+
+</body>
+</html>

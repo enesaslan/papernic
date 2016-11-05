@@ -1,0 +1,134 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if success is defined and success is not null and success == true %}
+        <div class="nNote nSuccess">
+            <p>{{ 'action_success'|trans }}</p>
+        </div>
+    {% endif %}
+
+    {% if success is defined and success is not null and success == false %}
+        <div class="nNote nFailure">
+            <p>{{ 'action_error'|trans }}</p>
+        </div>
+    {% endif %}
+
+    <div class="fluid">
+
+        <div class="widget grid6">
+            <div class="whead"><h6><span class="icon-user-3"></span>{{ 'your_details'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="body" style="line-height: 28px;">
+
+                <label><span class="icon-user-2"></span>{{ 'username'|trans }}:</label>
+
+                {{ app.session.get('user_name') }}
+
+                <br/>
+
+                <label><span class="icon-tag"></span>{{ 'full_name'|trans }}:</label>
+
+                {{ app.session.get('user_full_name') }}
+
+                <br/>
+
+                <label><span class="icon-email"></span>{{ 'email'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_email }}
+
+                <div class="divider"></div>
+
+                <label><span class="icon-screen-2"></span>{{ 'smtp_host'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_host_name }}
+
+                <br/>
+
+                <label><span class="icon-pen"></span>{{ 'smtp_user_name'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_user_name }}
+
+                <br/>
+
+                <label><span class="icon-pen"></span>{{ 'smtp_password'|trans }}:</label>
+
+                <em>{{ app.session.get('user_options').smtp_password != '' ? 'hidden'|trans }}</em>
+
+                <br/>
+
+                <label><span class="icon-settings"></span>{{ 'smtp_port'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_port }}
+
+                <br/>
+
+                <label><span class="icon-settings"></span>{{ 'smtp_use_auth'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_auth_mode ? 'yes'|trans : 'no'|trans }}
+
+                <br/>
+
+                <label><span class="icon-locked"></span>{{ 'smtp_use_ssl'|trans }}:</label>
+
+                {{ app.session.get('user_options').smtp_encryption ? 'yes'|trans : 'no'|trans }}
+
+            </div>
+
+        </div>
+
+        <div class="widget grid6" style="background: url('{{ asset('images/bg-lock.png') }}') top right no-repeat;">
+            <div class="whead"><h6><span class="icon-locked"></span>{{ 'your_privileges'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="grid12">
+                <div class="body" style="padding-top: 25px;">
+
+                    <span class="greenBack" style="font-size: 12px;">
+                    {{ 'role'|trans }}: <strong>{% if app.session.get('user_options').is_admin == true %} {{ 'admin'|trans }} {% else %} {{ 'user'|trans }} {% endif %}</strong>
+                    </span>
+
+                    <ul class="liDone" style="margin-top: 15px;">
+
+                        {% if app.session.get('user_options').priv_document_edit == true %}
+                            <li>{{ 'priv_document_edit'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_document_delete == true %}
+                            <li>{{ 'priv_document_delete'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_contact_edit == true %}
+                            <li>{{ 'priv_contact_edit'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_contact_delete == true %}
+                            <li>{{ 'priv_contact_delete'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_file_upload == true %}
+                            <li>{{ 'priv_file_upload'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_file_download == true %}
+                            <li>{{ 'priv_file_download'|trans }}</li>
+                        {% endif %}
+
+                        {% if app.session.get('user_options').priv_file_delete == true %}
+                            <li>{{ 'priv_file_delete'|trans }}</li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

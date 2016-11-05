@@ -1,0 +1,365 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    <div class="fluid">
+
+        <div class="widget grid8">
+            <div class="whead"><h6><span class="icon-document_fill"></span>{{ 'document_details'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            {{ form_start(documentForm) }}
+            {{ form_errors(documentForm) }}
+
+            <div class="formRow">
+
+                <div class="grid8">
+                    <label>{{ 'document_subject'|trans }} <span class="kirmizi">*</span></label>
+                    {{ form_widget(documentForm.document_subject) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'document_no'|trans }}</label>
+                    {{ form_widget(documentForm.document_no, {'attr': {'placeholder': 'document_no'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'document_date'|trans }}</label>
+                    {{ form_widget(documentForm.document_date, {'attr': {'placeholder': 'document_date'|trans, 'class': 'datepicker'}}) }}
+                    <div class="clear"></div>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'expiry_date'|trans }}</label>
+                    {{ form_widget(documentForm.expiry_date, {'attr': {'placeholder': 'expiry_date'|trans, 'class': 'datepicker'}}) }}
+                </div>
+
+                <!--
+                <div class="grid4">
+                    <label>{{ 'filing_cabinet_no'|trans }}</label>
+                    {{ form_widget(documentForm.filing_cabinet_no, {'attr': {'placeholder': 'filing_cabinet_no'|trans}}) }}
+                </div>
+                -->
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'from_contact'|trans }} &nbsp; - &nbsp; <a id="from_contact_add_label">{{ 'add_new'|trans }}</a><a id="from_contact_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    {{ form_widget(documentForm.from_contact) }}
+                    <div id="from_contact_add_div" style="display: none;">
+                        {{ form_widget(documentForm.from_contact_add) }}
+                    </div>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'to_contact'|trans }} &nbsp; - &nbsp; <a id="to_contact_add_label">{{ 'add_new'|trans }}</a><a id="to_contact_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    {{ form_widget(documentForm.to_contact) }}
+                    <div id="to_contact_add_div" style="display: none;">
+                        {{ form_widget(documentForm.to_contact_add) }}
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid6">
+                    <label>{{ 'document_type'|trans }} &nbsp; - &nbsp; <a id="type_add_label">{{ 'add_new'|trans }}</a><a id="type_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    {{ form_widget(documentForm.type_id) }}
+                    <div id="type_add_div" style="display: none;">
+                        {{ form_widget(documentForm.type_add) }}
+                    </div>
+                </div>
+
+                <div class="grid6">
+                    <label>{{ 'document_category'|trans }} &nbsp; - &nbsp; <a id="category_add_label">{{ 'add_new'|trans }}</a><a id="category_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    {{ form_widget(documentForm.category_id) }}
+                    <div id="category_add_div" style="display: none;">
+                        {{ form_widget(documentForm.category_add) }}
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid12">
+                    <label>{{ 'notes'|trans }}</label>
+                    {{ form_widget(documentForm.notes, {'attr': {'placeholder': 'notes'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="widgetButtons">
+
+                {% if app.session.get('user_options').priv_contact_edit == true %}
+                    {{ form_widget(documentForm.btn_save_document, {'attr': {'class': 'buttonM bRed'},  'label': 'save_document'|trans}) }}
+                {% endif %}
+
+                <a href="{{ path('document_list') }}">
+                    {{ form_widget(documentForm.btn_cancel, {'attr': {'class': 'buttonM bLightBlue'},  'label': 'cancel'|trans}) }}
+                </a>
+
+            </div>
+
+            {{ form_end(documentForm) }}
+
+        </div>
+
+        <div class="widget grid4">
+            <div class="whead"><h6><span class="icon-upload"></span>{{ 'attached_files'|trans }}</h6>
+                <div class="titleOpt">
+                    <a href="#" data-toggle="dropdown"><span class="icos-arrowdown"></span><span class="clear"></span></a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#" id="send-all-via-email"><span class="icos-email"></span>{{ 'send_all_via_email'|trans }}</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <ul class="filesDown">
+                <li class="currentFile" id="li-upload">
+                    <div class="fileProcess">
+                        <form id="upload-form" style="margin-top: 5px;">
+                            <input type="file" id="file" name="file" multiple style="display: none" ;/>
+                            <button type="button" id="btnUpload" class="buttonL bLightBlue" value="{{ 'upload_files'|trans }}" style="margin-bottom: 10px; width: 100%;">
+                                <span class="icon-upload-4"></span>
+                                {{ 'upload_files'|trans }}
+                            </button>
+
+                            <div id="progress1" style="height: 40px;">
+                                <span id="pb" style="background: #FFF; border: 1px solid #eee; box-shadow: none; height: 8px; margin: 0; padding: 0;" class="pbar ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                    <div id="progressvalue" class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 0%;"></div>
+                                </span>
+                                <span class="percent" id="percent">0%</span>
+                                <span class="elapsed" id="elapsed"></span>
+                            </div>
+
+                        </form>
+                    </div>
+                </li>
+
+                {% if total_files > 0 %}
+
+                    {% for l in file_list %}
+
+                        <li id="file-id-{{ l.file_file_id }}" class="file-row">
+                            <a href="javascript:void(0);" class="send-email" data-file-id="{{ l.file_file_id }}"><span class="icon-email" style="color: #BA6D6D;"></span></a>
+                            <a href="{{ path('file_download', {'file_id': l.file_file_id, 'file_name': l.file_file_name}) }}">{{ l.file_file_name }}</a>
+                            {% if app.session.get('user_options').priv_file_delete == true %}
+                                <span data-file-id="{{ l.file_file_id }}" class="remove btnFileDelete"></span>
+                            {% endif %}
+                        </li>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                <li class="currentFile">
+                    <div class="fileProcess">
+                        <strong>{{ 'disk_usage_details'|trans }}</strong>
+                        <div class="fileProgress">
+                            {{ 'used'|trans }}: {{ disk_usage }} MB / {{ app.session.get('customer_disk_limit') }} MB - %{{ disk_usage_percent }}
+                        </div>
+
+                        <div class="contentProgress" style="margin-bottom: 8px;">
+                            <div class="barG tipN" title="{{ disk_usage_percent }}%" id="bar10" style="width: {{ disk_usage_percent }}%;"></div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            jQuery('#btnUpload').click(function () {
+                jQuery('#file').click();
+            });
+
+            jQuery('#file').change(function () {
+
+                if (console.log(jQuery('#file')[0].files.length) == 0) {
+                    return false;
+                }
+
+                $("#btnUpload").attr("disabled", true);
+
+                var data = new FormData();
+                var elV = document.getElementById("progressvalue");
+                var elP = document.getElementById("percent");
+                var elE = document.getElementById("elapsed");
+                var percentUploaded = 0;
+
+                jQuery.each(jQuery('#file')[0].files, function (i, file) {
+                    data.append('file-' + i, file);
+                });
+
+                jQuery.ajax({
+                    url: '{{ path('file_upload', {'document_id': document_id}) }}',
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    xhr: function () {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener('progress', function (ev) {
+                                if (ev.lengthComputable) {
+                                    percentUploaded = Math.floor(ev.loaded * 100 / ev.total).toFixed(0);
+                                    elP.innerHTML = percentUploaded + '%';
+                                    elV.style.width = percentUploaded + '%';
+                                    elE.innerHTML = (ev.loaded / 1000000).toFixed(2) + ' {{ 'mb_loaded'|trans }}';
+                                }
+                            }, false);
+                        }
+                        return myXhr;
+                    },
+                    success: function (data) {
+                        $("#progressvalue").width('100%');
+                        $(".percent").html('100%');
+                        $(".elapsed").html('<span style="color: #436b80; font-weight: bold;">{{ 'files_uploading_done'|trans }}</span>');
+                        $(".filesDown").slideUp("normal", function () {
+                            $(".file-row").remove();
+                            $(data).insertAfter('#li-upload');
+                        });
+                        $(".filesDown").slideDown("fast");
+                        $("#upload-form")[0].reset();
+                        $("#btnUpload").attr("disabled", false);
+                        percentUploaded = 0;
+                    }
+                });
+
+            });
+
+            $('body').on('click', '.btnFileDelete', function () {
+                fid = $(this).data('file-id');
+                fUrl = '{{ path('file_delete', {'file_id': '000'}) }}';
+                if (confirm('{{ 'are_you_sure'|trans }}')) {
+                    jQuery.ajax({
+                        url: fUrl.replace('000', fid),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST',
+                        success: function (data) {
+                            if (data.indexOf('true') != -1) {
+                                $("#file-id-" + fid).hide("fast");
+                            } else {
+                                alert('{{ 'error_occurred'|trans }}');
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('body').on('click', '.send-email', function () {
+                var dialog1 = $("#email_dialog").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 630
+                });
+
+                var eUrl = '{{ path('compose_email', {'type': 'file', 'entity_id': '000'}) }}';
+                dialog1.load(eUrl.replace('000', $(this).data('file-id'))).dialog('open');
+            });
+
+            $('#from_contact_add_label').click( function () {
+               $('#form_from_contact').hide();
+                $('#from_contact_add_label').hide();
+                $('#from_contact_add_div').show();
+                $('#from_contact_cancel_label').show();
+            });
+
+            $('#from_contact_cancel_label').click( function () {
+                $('#from_contact_add_div').hide();
+                $('#from_contact_cancel_label').hide();
+                $('#form_from_contact_add').val('');
+                $('#form_from_contact').show();
+                $('#from_contact_add_label').show();
+            });
+
+            $('#to_contact_add_label').click( function () {
+                $('#form_to_contact').hide();
+                $('#to_contact_add_label').hide();
+                $('#to_contact_add_div').show();
+                $('#to_contact_cancel_label').show();
+            });
+
+            $('#to_contact_cancel_label').click( function () {
+                $('#to_contact_add_div').hide();
+                $('#to_contact_cancel_label').hide();
+                $('#form_to_contact_add').val('');
+                $('#form_to_contact').show();
+                $('#to_contact_add_label').show();
+            });
+
+            $('#type_add_label').click( function () {
+                $('#form_type_id').hide();
+                $('#type_add_label').hide();
+                $('#type_add_div').show();
+                $('#type_cancel_label').show();
+            });
+
+            $('#type_cancel_label').click( function () {
+                $('#type_add_div').hide();
+                $('#type_cancel_label').hide();
+                $('#form_type_add').val('');
+                $('#form_type_id').show();
+                $('#type_add_label').show();
+            });
+
+            $('#category_add_label').click( function () {
+                $('#form_category_id').hide();
+                $('#category_add_label').hide();
+                $('#category_add_div').show();
+                $('#category_cancel_label').show();
+            });
+
+            $('#category_cancel_label').click( function () {
+                $('#category_add_div').hide();
+                $('#category_cancel_label').hide();
+                $('#form_category_add').val('');
+                $('#form_category_id').show();
+                $('#category_add_label').show();
+            });
+
+            $('body').on('click', '#send-all-via-email', function () {
+                var dialog1 = $("#email_dialog").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 630
+                });
+
+                dialog1.load('{{ path('compose_email', {'type': 'document', 'entity_id': document_id}) }}').dialog('open');
+            });
+
+        });
+    </script>
+
+{% endblock %}
+

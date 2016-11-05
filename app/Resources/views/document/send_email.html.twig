@@ -1,0 +1,79 @@
+{% if smtp_ok == false %}
+    <div class="nNote nWarning" style="margin-top: 12px;">
+        <p>
+            <span style="font-weight: normal;">{{ 'smtp_not_defined'|trans }}</span>
+            <br/>
+            {{ 'contact_admin'|trans }}
+        </p>
+    </div>
+{% endif %}
+
+<div class="formRow">
+    <form name="emailForm" id="emailForm" action="{{ path('file_email_send') }}" method="post">
+        <label>{{ 'to'|trans }}:</label>
+        <input type="text" name="email_to" id="email_to" required/>
+
+        <div class="clear"></div>
+
+        <label>{{ 'subject'|trans }}:</label>
+        <input type="text" name="email_subject" id="email_subject" required/>
+
+        <div class="clear"></div>
+
+        <label>{{ 'message'|trans }}:</label>
+        <textarea name="email_message" id="email_message" rows="4" required></textarea>
+
+        <div class="clear"></div>
+
+        <input type="hidden" name="file_ids" id="file_ids" value="{{ file.fileId }}" />
+
+        <div class="fluid">
+
+            <div class="grid2">
+                <input type="button" name="email_send" id="email_send" value="{{ 'send'|trans }}" class="buttonS bLightBlue" style="margin-top: 10px;"/>
+                <img id="email_loader" src="{{ asset('images/elements/loaders/6.gif') }}" style="display: none; margin-top: 10px;"  />
+            </div>
+
+            <div class="grid10" style="text-align: right;">
+                <strong style="color: #436b80;">{{ 'attached_files'|trans }}</strong>
+                {% if file is defined %}
+                    <br/>
+                    <a style="color: #BA6D6D;" href="{{ path('file_download', {'file_name': file.fileName, 'file_id': file.fileId}) }}">{{ file.fileName }}</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('body').on('click', '#email_send', function () {
+
+            $("#email_send").hide("fast");
+            $("#email_loader").show("fast");
+
+            jQuery.ajax({
+                url: '{{ path('file_email_send') }}',
+                type: 'POST',
+                data: {
+                    email_subject: $("#email_subject").val(),
+                    email_to: $("#email_to").val(),
+                    email_message: $("#email_message").val(),
+                    file_ids: $("#file_ids").val()
+                },
+                success: function (data) {
+                    if (data.indexOf('email_sent') != -1) {
+                        jQuery('#email_dialog').dialog('close')
+                    } else {
+                        alert(data);
+                        $("#email_send").attr("disabled", false);
+                        $("#email_send").show("fast");
+                        $("#email_loader").hide("fast");
+                    }
+                }
+            });
+        });
+    });
+</script>

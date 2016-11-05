@@ -1,0 +1,155 @@
+user_login: Kullanıcı Girişi
+username: Kullanıcı Adı
+password: Şifre
+login: Giriş
+all_fields_required: Bütün alanlar gereklidir.
+fields_marked_red_required: Kırmızı * ile işaretli alanlar zorunludur.
+remember_me: Beni hatırla
+company_id: Şirket Kodu
+user_login_failed: Hata: Giriş yapılamadı
+dashboard: Mesaj Panosu
+app_slogan: Doküman Yönetim ve Paylaşım Sistemi
+logout: Güvenli Çıkış
+logged_in: Kullanıcı:
+contact_details: Kişi Detayları
+individual: Bireysel
+corporate: Kurumsal
+contact_type: Kayıt Tipi
+contact_name: Ad Soyad veya Şirket Adı
+save_contact: Bilgileri Kaydet
+email: E-posta
+phone: Telefon
+gsm: GSM
+citizenship_no: TC Kimlik No
+tax_id: Vergi No
+tax_office: Vergi Dairesi
+web: Web
+im: Anlık Mesajlaşma ID
+fax: Faks
+country: Ülke
+address: Adres
+notes: Notlar
+cancel: Vazgeç
+contact_list: Kişi Listesi
+action_success: İşlem başarıyla gerçekleştirildi.
+action_error: İşlem sırasında hata meydana geldi.
+contact: Kişi
+contacts: Kişiler
+add_contact: Kişi Ekle
+no_records_found: Kayıt bulunamadı
+records_found: kayıt bulundu
+are_you_sure: Bu işlemi gerçekleştirmek istiyor musunuz?
+delete: Sil
+type: Tip
+name: Ad
+actions: İşlem
+go_to_page: Sayfaya git
+customer_login_id: Şirket Kodu
+quick_search_contacts: Hızlı Kişi Ara
+documents: Dokümanlar
+add_document: Yeni Doküman
+document_list: Doküman Arşivi
+document_details: Doküman Detayları
+document_subject: Başlık / Konu
+document_no: Belge No
+save_document: Bilgileri Kaydet
+document_date: Belge Tarihi
+expiry_date: Vade
+filing_cabinet_no: Saklandığı Dolap
+from_contact: Kimden
+to_contact: Kime
+choose: Seçiniz...
+document_type: Tip
+document_category: Kategori
+no: Hayır
+subject: Konu
+type: Tip
+category: Kategori
+edit: Düzenle
+files: Dosyalar
+upload_files: Yüklenecek Dosyaları Seçiniz
+file_name: Dosya Adı
+size: Boyut
+date_added: Kayıt Tarihi
+timestamp: Zaman Damgası
+uploaded_by: Yükleyen
+files_uploading: Dosyalar yüklenirken lütfen bekleyiniz...
+files_uploading_done: Yükleme tamamlandı!
+error_occurred: İşlem sırasında hata meydana geldi.
+search_filters_active: Uyarı: Arama filteleri aktif. Tüm kayıtlar gösterilmiyor olabilir.
+clear_search_filters: Arama filtrelerini temizlemek için buraya tıklayın.
+write_dashboard: Mesaj panosuna yaz
+send: Gönder
+recent_activities: Yeni Hareketler
+send_dashboard: Mesaj Panosuna Yazın
+quick_search_documents: Hızlı Doküman Ara
+has_added_document: doküman ekledi.
+demo_warning_1: Uyarı! Şu anda AÇIK DEMO sürümünü kullanıyorsunuz.
+demo_warning_2: Kullanıcılar tarafından eklenen içerikten PaperNIC sorumlu değildir.
+disk_usage_details: Disk kullanımı
+used: Kullanılan
+limit: Limit
+percent: Yüzde
+definitions: Tanımlamalar
+document_types: Doküman Tipleri
+document_categories: Document Kategorileri
+add_new_document_type: Yeni doküman tipi ekle
+add_new_document_category: Yeni doküman kategorisi ekle
+attached_files: Ekli Dosyalar
+user_profile: Kullanıcı Bilgileri
+your_privileges: Yetkileriniz
+priv_document_edit: Doküman bilgilerini değiştirme
+priv_document_delete: Doküman silme
+priv_contact_edit: Kişi kayıtlarını değiştirme
+priv_contact_delete: Kişi silme
+priv_file_upload: Dosya yükleme
+priv_file_download: Dosya indirme
+priv_file_delete: Dosya silme
+role: Kullanıcı Grubu
+user: Kullanıcı
+admin: Yönetici
+your_details: Bilgileriniz
+full_name: Ad Soyad
+smtp_host: SMTP Sunucusu
+smtp_user_name: SMTP Kullanıcı Adı
+smtp_password: SMTP Şifre
+hidden: Gizli
+smtp_port: SMTP Port
+smtp_use_auth: SMTP Auth Tipi
+smtp_use_ssl: SMTP SSL Tipi
+yes: Evet
+mb_loaded: MB yüklendi
+send_via_email: E-posta ile Gönder
+loading: Yükleniyor
+please_wait: Lütfen bekleyiniz
+to: Kime
+message: Mesaj
+send: Gönder
+smtp_not_defined: SMTP Bilgileriniz tanımlı değil.
+contact_admin: Lütfen sistem yöneticinizle irtibata geçiniz.
+account_details: Hesap Bilgileri
+system_users: Sistem Kullanıcıları
+management: Yönetim
+unauth_access: Yetkisiz İşlem: Bu işlemi yapabilmek için yetkili değilsiniz.
+last_seen: Son Görülme
+user_details: Kullanıcı Bilgileri
+privileges: Yetkiler
+confirm: Onay
+smtp_auth_type: SMTP Auth Modu
+smtp_encryption: SMTP Şifreleme
+save_user_details: Kullanıcı Bilgilerini Kaydet
+user_limit_reached: Hesabınızın kullanıcı limiti dolduğu için, yeni kullanıcı ekleyemezsiniz.
+add_new_user: Yeni Sistem Kullanıcısı Ekle
+password_not_match: Şifre ve şifre onay alanları birbiriyle uyuşmuyor.
+add_new: Yeni
+show: Göster
+secure_connection: Güvenli Bağlantı
+send_email: E-Posta Gönder
+compose_email: Yeni E-Posta
+send_all_via_email: Tümünü e-posta gönder
+menu: Menü
+ie_emails: Noktalı virgül ile ayırabilirsiniz: ahmet@site.com; mehmet@ornek.com
+start: Başlangıç
+end: Bitiş
+optional: İsteğe Bağlı
+reset_sort_order: Sırala (En Yeni)

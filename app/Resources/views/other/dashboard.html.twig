@@ -1,0 +1,130 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if app.session.get('demo') == true %}
+        <div class="nNote nWarning">
+            <p>
+                <span style="font-weight: normal;">{{ 'demo_warning_1'|trans }}</span>
+                <br />
+                <strong>{{ 'demo_warning_2'|trans }}</strong>
+            </p>
+        </div>
+    {% endif %}
+
+    <div class="fluid">
+
+    <div class="fluid">
+
+        <div class="widget grid6">
+
+            <div class="whead">
+                <h6><span class="icon-attachment"></span>{{ 'dashboard'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+                <div class="searchLine" style="margin-top: 5px;">
+                    <form name="db_form" id="db_form" method="post">
+                        <input type="text" name="db_message" id="db_message" maxlength="250" class="ac ui-autocomplete-input" placeholder="{{ 'write_dashboard'|trans }}" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                        <button type="submit" name="db_send_message" id="db_send_message" value="1">
+                            <span class="icos-comment" style="margin: 6px 6px 6px 8px; padding: 0;"></span></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <ul class="messagesOne" id="message_list">
+
+                {% for m in messages %}
+
+                    {% if m.dashboard_user_id == app.session.get('user_id') %}
+                        {% set who = 'by_me' %}
+                    {% else %}
+                        {% set who = 'by_user' %}
+                    {% endif %}
+
+                    <li class="{{ who }}">
+                        <a href="javascript:void(0);" title="{{ m.full_name }} ({{ m.user_name }})"><img src="{{ asset('images/user_placeholder.gif') }}" alt=""/></a>
+                        <div class="messageArea">
+                            <span class="aro"></span>
+                            <div class="infoRow">
+                                <span class="name"><strong>{{ m.full_name }} ({{ m.user_name }})</strong></span>
+                                <span class="time">{{ m.dashboard_timestamp|date() }}</span>
+                                <div class="clear"></div>
+                            </div>
+                            {{ m.dashboard_message|trim }}
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <div class="widget grid6">
+            <div class="whead">
+                <h6><span class="icon-clock"></span>{{ 'recent_activities'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            {% for a in activities %}
+                <div class="formRow">
+                    <span class="icon-checkmark-3" style="color: #5d91b8;"></span><em>{{ a.full_name }} ({{ a.user_name }})</em> {{ 'has_added_document'|trans }} <a href="{{ path('document_view', {'document_id': a.document_id}) }}">{{ a.document_subject }}</a> at {{ a.date_added|date }}
+                    </div>
+                <div class="divider" style="margin: 0;"></div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#db_form").submit(function (e) {
+
+                if ($("#db_message").val().trim() == '') {
+                    return false;
+                }
+
+                c = "";
+                user_placeholder = '{{ asset('images/user_placeholder.gif') }}';
+                user_id = '{{ app.session.get('user_id') }}';
+
+                jQuery.ajax({
+                    url: '{{ path('dashboard_add') }}',
+                    cache: false,
+                    type: 'POST',
+                    data: {message: $("#db_message").val()},
+                    success: function (data) {
+                        $("#db_message").val('');
+                        data = jQuery.parseJSON(data);
+                        jQuery.each(data, function (key, value) {
+                            if (user_id == value.dashboard_user_id) {
+                                who = 'me';
+                            } else {
+                                who = 'user';
+                            }
+                            var t = new Date( value.dashboard_timestamp * 1000);
+                            formatted = t.toLocaleDateString() + ' - ' + t.toLocaleTimeString();
+                        c = c + '<li class="by_' + who + '"><a href="javascript:void(0);"><img src="' + user_placeholder + '" /></a></a><div class="messageArea"><span class="aro"></span><div class="infoRow"> <span class="name"><strong>' + value.full_name + ' (' + value.user_name + ')' + '</strong></span> <span class="time">' + formatted + '</span> <div class="clear"></div> </div>' + value.dashboard_message + '</div> <div class="clear"></div> </li>';
+                        });
+                        $(".messagesOne").html(c);
+                    }
+                });
+
+                e.preventDefault();
+
+            });
+
+        });
+    </script>
+
+
+{% endblock %}

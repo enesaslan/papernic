@@ -1,0 +1,81 @@
+<script type="text/javascript">
+    var N = navigator.appName, ua = navigator.userAgent, tem;
+    var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+    if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
+    M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
+    if (navigator.appName == "Microsoft Internet Explorer" && M[1] < "10.0") {
+        if (lang == 'tr') {
+            document.location.href = "http://outdatedbrowser.com/tr";
+        } else {
+            document.location.href = "http://outdatedbrowser.com/";
+        }
+    }
+</script>
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'user_login'|trans }} - {{ app_name }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link href="{{ asset('css/styles.min.css') }}" rel="stylesheet" type="text/css"/>
+    <!--[if IE]>
+    <link href="{{ asset('css/ie.min.css') }}" rel="stylesheet" type="text/css">
+    <![endif]-->
+    <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+</head>
+
+<body style="min-width: inherit;">
+
+<div class="loginWrapper">
+
+    {{ form_start(loginForm) }}
+    {{ form_errors(loginForm) }}
+    <fieldset>
+        <div class="loginPic">
+            <a href="#" title=""><img src="{{ asset('images/logo.png') }}"/></a>
+            <span>{{ 'user_login'|trans }}</span>
+        </div>
+
+        {% if login_failed == true %}
+            <div class="nNote nFailure">
+                {{ 'user_login_failed'|trans }}
+            </div>
+        {% endif %}
+
+        {% if demo == true %}
+
+            {% set user_no = random(1..5) %}
+            {% set demo_company = "demo_company" %}
+            {% set demo_user = "demo_user_" ~ user_no %}
+            {% set demo_password = "demo_password" %}
+
+        {% else %}
+
+            {% set demo_company = "" %}
+            {% set demo_user = "" %}
+            {% set demo_password = "" %}
+
+        {% endif %}
+
+        {{ form_widget(loginForm.user_name, {'attr': {'placeholder': 'username'|trans, 'value': demo_user}}) }}
+        {{ form_errors(loginForm.user_name) }}
+
+        {{ form_widget(loginForm.password, {'attr': {'placeholder': 'password'|trans, 'value': demo_password}}) }}
+        {{ form_errors(loginForm.password) }}
+
+        <div class="logControl">
+            <div class="memory">
+                <img src="{{ asset('images/ssl.png') }}" style="float: left; margin-right: 8px; margin-top: 3px;"/> {{ 'secure_connection'|trans }}
+            </div>
+            {{ form_widget(loginForm.btn_login, {'attr': {'class': 'buttonM bRed formSubmit'},  'label': 'login'|trans}) }}
+            <div class="clear"></div>
+        </div>
+    </fieldset>
+
+    {{ form_end(loginForm) }}
+
+</div>
+
+</body>
+</html>

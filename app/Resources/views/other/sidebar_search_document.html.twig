@@ -1,0 +1,46 @@
+<form name="quick_document_search_form" id="quick_document_search_form" method="post" action="{{ path('document_search') }}">
+    <div class="searchLine">
+        <select name="document_filter_column" id="document_filter_column" class="leftSelect">
+            <option value="document_filter_subject" selected="selected">{{ 'document_subject'|trans }}</option>
+            <option value="document_filter_no">{{ 'document_no'|trans }}</option>
+            <option value="document_filter_type">{{ 'document_type'|trans }}</option>
+            <option value="document_filter_category">{{ 'document_category'|trans }}</option>
+            <option value="document_filter_document_date">{{ 'document_date'|trans }}</option>
+            <option value="document_filter_from">{{ 'from_contact'|trans }}</option>
+            <option value="document_filter_to">{{ 'to_contact'|trans }}</option>
+            <option value="document_filter_notes">{{ 'notes'|trans }}</option>
+            <option value="document_filter_date_added">{{ 'date_added'|trans }}</option>
+        </select>
+    </div>
+    <div class="searchLine" style="width: 199px; margin: 10px auto;">
+
+        <input type="text" name="document_filter_value" id="document_filter_value" placeholder="{{ 'quick_search_documents'|trans }}" />
+
+        <input type="text" class="datepicker" name="qds_date_start" id="qds_date_start" placeholder="{{ 'start'|trans }}" style="width:194px; display: none;" />
+
+        <input type="text" class="datepicker" name="qds_date_end" id="qds_date_end" placeholder="{{ 'end'|trans ~ ' (' ~ 'optional'|trans ~ ')' }}" style="width:194px; display: none;" />
+
+        <select name="qds_types" id="qds_types" style="width:194px; display: none;">
+            {% for t in types %}
+            <option value="{{ t.documentTypeId }}">{{ t.documentType }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="qds_categories" id="qds_categories" style="width:194px; display: none;">
+            {% for c in categories %}
+                <option value="{{ c.documentCategoryId }}">{{ c.documentCategory }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="qds_contacts" id="qds_contacts" style="width:194px; display: none;">
+            {% for con in contacts %}
+                <option value="{{ con.contact_id }}">{{ con.contact_name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" id="btn_quick_document_search" name="btn_quick_document_search" value="1">
+            <span class="icos-search"></span>
+        </button>
+
+    </div>
+</form>

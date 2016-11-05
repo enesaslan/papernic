@@ -1,0 +1,22 @@
+<ul class="userList">
+    {% for u in users %}
+
+        {% if u.isOnline %}
+            {% set status = 'available' %}
+        {% else %}
+            {% set status = 'off' %}
+        {% endif %}
+
+        <li>
+            <a href="javascript:void(0);" title="{{ u.fullName }}">
+                <img src="{{ asset('images/user_placeholder.gif') }}" alt="">
+                                <span class="contactName">
+                                    <strong>{{ u.fullName }}</strong>
+                                    <i>{{ u.userName }}</i>
+                                </span>
+                <span class="status_{{ status }}"></span>
+                <span class="clear"></span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

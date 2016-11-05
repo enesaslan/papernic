@@ -1,0 +1,205 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+
+    {% if app.session.get('demo') == false %}
+    <form name="user_add_form" id="user_add_form" action="{{ path('admin_user_add') }}" method="post">
+    {% endif %}
+
+        <div class="fluid">
+
+            <div class="widget grid8" style="padding-bottom: 15px;">
+                <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_details'|trans }}</h6>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="formRow">
+
+                    <div class="grid6">
+                        <label>{{ 'username'|trans }} <span class="kirmizi">*</span></label>
+                        <input type="text" name="user_name" id="user_name" placeholder="{{ 'username'|trans }}"/>
+                    </div>
+
+                    <div class="grid6">
+                        <label>{{ 'full_name'|trans }} <span class="kirmizi">*</span></label>
+                        <input type="text" name="full_name" id="full_name" placeholder="{{ 'full_name'|trans }}"/>
+                    </div>
+
+                    <div class="clear"></div>
+
+                </div>
+
+                <div class="formRow">
+
+                    <div class="grid6">
+                        <label>{{ 'password'|trans }} <span class="kirmizi">*</span></label>
+                        <input type="password" name="password1" id="password1" required/>
+                    </div>
+
+                    <div class="grid6">
+                        <label>{{ 'password'|trans }} ({{ 'confirm'|trans }}) <span class="kirmizi">*</span></label>
+                        <input type="password" name="password2" id="password2" required/>
+                    </div>
+
+                    <div class="clear"></div>
+
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="formRow">
+
+                    <div class="grid6">
+                        <label>{{ 'email'|trans }}</label>
+                        <input type="text" name="email" id="email" placeholder="{{ 'email'|trans }}"/>
+                    </div>
+
+                    <div class="grid6">
+                        <label>{{ 'smtp_host'|trans }}</label>
+                        <input type="text" name="smtp_host" id="smtp_host" placeholder="{{ 'smtp_host'|trans }}"/>
+                    </div>
+
+                    <div class="clear" style="margin: 10px 0;"></div>
+
+                </div>
+
+                <div class="formRow">
+
+                    <div class="grid6">
+                        <label>{{ 'smtp_user_name'|trans }}</label>
+                        <input type="text" name="smtp_user_name" id="smtp_user_name" placeholder="{{ 'smtp_user_name'|trans }}"/>
+                    </div>
+
+                    <div class="grid6">
+                        <label>{{ 'smtp_password'|trans }}</label>
+                        <input type="password" name="smtp_password" id="smtp_password" placeholder="{{ 'smtp_password'|trans }}"/>
+                    </div>
+
+                    <div class="clear"></div>
+
+                </div>
+
+                <div class="formRow">
+
+                    <div class="grid3">
+                        <label>{{ 'smtp_port'|trans }}</label>
+                        <input type="text" name="smtp_port" id="smtp_port" placeholder="{{ 'smtp_port'|trans }}" value="587"/>
+                    </div>
+
+                    <div class="grid3">
+                        <label>{{ 'smtp_auth_type'|trans }}</label>
+                        <select name="smtp_auth">
+                            <option value="login" selected="selected">Login</option>
+                            <option value="plain">Plain</option>
+                            <option value="cram-md5">Cram-MD5</option>
+                            <option value="">None</option>
+                        </select>
+                    </div>
+
+                    <div class="grid3">
+                        <label>{{ 'smtp_encryption'|trans }}</label>
+                        <select name="smtp_encryption">
+                            <option value="" selected="selected">None</option>
+                            <option value="ssl">SSL</option>
+                            <option value="tls">TLS</option>
+                        </select>
+                    </div>
+
+                    <div class="clear"></div>
+
+                </div>
+
+            </div>
+
+            <div class="widget grid4" style="background: url('/images/bg-lock.png') top right no-repeat;">
+                <div class="whead"><h6><span class="icon-locked"></span>{{ 'privileges'|trans }}</h6>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="body" style="line-height: 28px;">
+
+                    <label>{{ 'role'|trans }}</label>
+                    <br/>
+                    <select name="role" style="margin-bottom: 15px;">
+                        <option value="user" selected="selected">{{ 'user'|trans }}</option>
+                        <option value="admin">{{ 'admin'|trans }}</option>
+                    </select>
+
+                    <div class="clear"></div>
+
+                    <label>
+                        <input type="checkbox" name="priv_document_edit" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_document_edit'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_document_delete" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_document_delete'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_contact_edit" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_contact_edit'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_contact_delete" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_contact_delete'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_file_upload" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_file_upload'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_file_download" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_file_download'|trans }}
+                    </label>
+
+                    <br/>
+
+                    <label>
+                        <input type="checkbox" name="priv_file_delete" value="true" checked="checked" class="chkBox"/>
+                        {{ 'priv_file_delete'|trans }}
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% if app.session.get('demo') == false %}
+            <input type="submit" name="btn_user_add" id="btn_user_add" class="buttonM bRed btn_bottom" value="{{ 'save_user_details'|trans }}"/>
+        {% endif %}
+
+        <input type="button" onclick="location.href='{{ path('admin_user_list') }}';" class="buttonM bLightBlue btn_bottom" value="{{ 'cancel'|trans }}"/>
+
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+           $('#user_add_form').submit(function () {
+              if ($("#password1").val() != $("#password2").val()) {
+                  alert('{{ 'password_not_match'|trans }}');
+                  return false;
+              }
+           });
+        });
+    </script>
+
+{% endblock %}
+

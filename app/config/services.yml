@@ -1,0 +1,19 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+services:
+  appbundle.utils:
+    class: AppBundle\Classess\Utils
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+  appbundle.file:
+    class: AppBundle\Controller\FileController
+    arguments:
+      entityManager: "@doctrine.orm.entity_manager"
+    calls:
+      - [ setContainer, [ @service_container ]]

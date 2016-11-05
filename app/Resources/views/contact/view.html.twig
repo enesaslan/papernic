@@ -1,0 +1,135 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} {{ app.session.get('user_full_name') }} {% endblock %}
+
+{% block content %}
+    {{ form_start(contactForm) }}
+    {{ form_errors(contactForm) }}
+
+    <div class="fluid">
+
+        <div class="widget grid12">
+            <div class="whead"><h6><span class="icon-user"></span>{{ 'contact_details'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid2">
+                    <label>{{ 'contact_type'|trans }}</label>
+                    {{ form_widget(contactForm.contact_type) }}
+                </div>
+
+                <div class="grid10">
+                    <label>{{ 'contact_name'|trans }} <span class="kirmizi">*</span></label>
+                    {{ form_widget(contactForm.contact_name, {'attr': {'placeholder': 'contact_name'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid4">
+                    <label>{{ 'email'|trans }}</label>
+                    {{ form_widget(contactForm.email, {'attr': {'placeholder': 'email'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'phone'|trans }}</label>
+                    {{ form_widget(contactForm.phone, {'attr': {'placeholder': 'phone'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'gsm'|trans }}</label>
+                    {{ form_widget(contactForm.gsm, {'attr': {'placeholder': 'gsm'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid4">
+                    <label>{{ 'citizenship_no'|trans }}</label>
+                    {{ form_widget(contactForm.citizenship_no, {'attr': {'placeholder': 'citizenship_no'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'tax_id'|trans }}</label>
+                    {{ form_widget(contactForm.tax_id, {'attr': {'placeholder': 'tax_id'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'tax_office'|trans }}</label>
+                    {{ form_widget(contactForm.tax_office, {'attr': {'placeholder': 'tax_office'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid4">
+                    <label>{{ 'web'|trans }}</label>
+                    {{ form_widget(contactForm.web, {'attr': {'placeholder': 'web'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'im'|trans }}</label>
+                    {{ form_widget(contactForm.im, {'attr': {'placeholder': 'im'|trans}}) }}
+                </div>
+
+                <div class="grid4">
+                    <label>{{ 'fax'|trans }}</label>
+                    {{ form_widget(contactForm.fax, {'attr': {'placeholder': 'fax'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid2">
+                    <label>{{ 'country'|trans }}</label>
+                    {{ form_widget(contactForm.country_id) }}
+                </div>
+
+                <div class="grid10">
+                    <label>{{ 'address'|trans }}</label>
+                    {{ form_widget(contactForm.address, {'attr': {'placeholder': 'address'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+            <div class="formRow">
+
+                <div class="grid12">
+                    <label>{{ 'notes'|trans }}</label>
+                    {{ form_widget(contactForm.notes, {'attr': {'placeholder': 'notes'|trans}}) }}
+                </div>
+
+                <div class="clear"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% if app.session.get('user_options').priv_contact_edit == true %}
+        {{ form_widget(contactForm.btn_save_contact, {'attr': {'class': 'buttonM bRed btn_bottom'},  'label': 'save_contact'|trans}) }}
+    {% endif %}
+
+    <a href="{{ path('contact_list') }}">
+        {{ form_widget(contactForm.btn_cancel, {'attr': {'class': 'buttonM bLightBlue btn_bottom btn_cancel'},  'label': 'cancel'|trans}) }}
+    </a>
+
+    {{ form_end(contactForm) }}
+{% endblock %}
