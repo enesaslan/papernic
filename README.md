@@ -8,7 +8,9 @@ Open Source Document Management & Collaboration System. PaperNIC transforms the 
 
 - **Quick Search**: To find document, all you need to do is type and hit enter and PaperNIC will fetch the document for you.
 
-###Online Demo: https://panel.papernic.com/en/demo
+###Online Demo (English): https://panel.papernic.com/en/demo
+
+###Online Demo (Turkish / Türkçe): https://panel.papernic.com/tr/demo
 
 ![papernic-1](https://www.papernic.com/images/mac1.png "PaperNIC")
 
