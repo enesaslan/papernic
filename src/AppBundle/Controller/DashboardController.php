@@ -45,7 +45,7 @@ class DashboardController extends Controller
         $man = $this->getDoctrine()->getManager('default');
 
         $dashboard = new Dashboard();
-        $dashboard->setMessage(htmlspecialchars($request->request->get('message'), ENT_QUOTES, 'UTF-8'));
+        $dashboard->setMessage(str_replace(['<', '>', '|', '&', '#', ';', '"', "'"], '', strip_tags($request->request->get('message'))));
         $dashboard->setUserId($request->getSession()->get('user_id'));
         $dashboard->setTimestamp(time());
 
