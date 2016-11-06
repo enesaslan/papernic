@@ -1,16 +1,3 @@
-<script type="text/javascript">
-    var N = navigator.appName, ua = navigator.userAgent, tem;
-    var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-    if (M && (tem = ua.match(/version\/([\.\d]+)/i)) != null) M[2] = tem[1];
-    M = M ? [M[1], M[2]] : [N, navigator.appVersion, '-?'];
-    if (navigator.appName == "Microsoft Internet Explorer" && M[1] < "10.0") {
-        if (lang == 'tr') {
-            document.location.href = "http://outdatedbrowser.com/tr";
-        } else {
-            document.location.href = "http://outdatedbrowser.com/";
-        }
-    }
-</script>
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
 <head>
@@ -46,13 +33,11 @@
         {% if demo == true %}
 
             {% set user_no = random(1..5) %}
-            {% set demo_company = "demo_company" %}
             {% set demo_user = "demo_user_" ~ user_no %}
             {% set demo_password = "demo_password" %}
 
         {% else %}
 
-            {% set demo_company = "" %}
             {% set demo_user = "" %}
             {% set demo_password = "" %}
 

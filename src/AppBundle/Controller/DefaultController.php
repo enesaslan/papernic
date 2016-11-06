@@ -15,15 +15,6 @@ use Doctrine\Bundle\DoctrineBundle;
 
 class DefaultController extends Controller
 {
-
-    /**
-     * @Route("/demo", name="demo")
-     */
-    public function demo(Request $request)
-    {
-        return $this->indexAction($request, true);
-    }
-
     /**
      * @Route("/logout", name="logout")
      */
@@ -36,7 +27,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="login_form")
      */
-    public function indexAction(Request $request, $demo = false)
+    public function indexAction(Request $request)
     {
         $login_failed = null;
 
@@ -96,8 +87,7 @@ class DefaultController extends Controller
         return $this->render('other/login.html.twig',
             array(
                 'loginForm'    => $loginForm->createView(),
-                'login_failed' => $login_failed,
-                'demo'         => $demo
+                'login_failed' => $login_failed
             ));
     }
 
