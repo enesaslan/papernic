@@ -56,7 +56,7 @@
                                 <span class="time">{{ m.dashboard_timestamp|date() }}</span>
                                 <div class="clear"></div>
                             </div>
-                            {{ m.dashboard_message|trim }}
+                            {{ m.dashboard_message|escape }}
                         </div>
                         <div class="clear"></div>
                     </li>
