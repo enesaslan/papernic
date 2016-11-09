@@ -48,7 +48,7 @@ doctrine:
             driver:   pdo_mysql
             host:     '%shared_database_host%'
             port:     '%shared_database_port%'
-            dbname:   papernic
+            dbname:   '%shared_database%'
             user:     '%shared_database_user%'
             password: '%shared_database_password%'
             charset:  UTF8

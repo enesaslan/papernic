@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    shared_database_host: 127.0.0.1
+    shared_database_port: 3306
+    shared_database_user: root
+    shared_database_password:
+    shared_database: papernic
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: a63bdcf6c25d604dd4b46d2a6dc8ab1e
