@@ -14,4 +14,4 @@ Open Source Document Management & Collaboration System. PaperNIC transforms the 
 
 ![papernic-1](https://www.papernic.com/images/mac1.png "PaperNIC")
 
-
+[![Join the chat at https://gitter.im/papernic/Lobby](https://badges.gitter.im/papernic/Lobby.svg)](https://gitter.im/papernic/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
