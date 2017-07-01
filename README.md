@@ -14,4 +14,6 @@ Open Source Document Management & Collaboration System. PaperNIC transforms the 
 
 ![papernic-1](https://www.papernic.com/images/mac1.png "PaperNIC")
 
-[![Join the chat at https://gitter.im/papernic/Lobby](https://badges.gitter.im/papernic/Lobby.svg)](https://gitter.im/papernic/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Donate via Ethereum: 0x003DCD95bd10E61289E54B65aE5bb0645E38ed5B
+
+![donate-1](https://www.muratcileli.com/wp-content/uploads/static/ethereum-qr.gif "Ethereum QR Code")
