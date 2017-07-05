@@ -14,8 +14,7 @@ Open Source Document Management & Collaboration System. PaperNIC transforms the 
 
 ![papernic-1](https://www.papernic.com/images/mac1.png "PaperNIC")
 
-Donate via Ethereum
+Donate
 ========
-**Address:** 0x003DCD95bd10E61289E54B65aE5bb0645E38ed5B
-
-![donate-1](https://www.muratcileli.com/wp-content/uploads/static/ethereum-qr.gif "Ethereum QR Code")
+**BitCoin:** 17R6GHAqTGuUALMz6D79pqosHsbQGSQ4yw
+**Ethereum:** 0x003DCD95bd10E61289E54B65aE5bb0645E38ed5B
