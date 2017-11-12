@@ -16,6 +16,6 @@ Open Source Document Management & Collaboration System. PaperNIC transforms the 
 
 Donate
 ========
-**BitCoin:** 17R6GHAqTGuUALMz6D79pqosHsbQGSQ4yw
+**BitCoin:** 1DkNbC8WaQ223gm5iDTqNPTHPJaYV2QUH
 
-**Ethereum:** 0x003DCD95bd10E61289E54B65aE5bb0645E38ed5B
+**Ethereum:** 0xFCBd0f46d9118f2FB290515398719B93236F3130
