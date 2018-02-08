@@ -52,7 +52,7 @@ class DefaultController extends Controller
                 ->findOneBy(
                     array(
                         'user_name' => $loginForm->getData()->getUserName(),
-                        'password'  => md5($loginForm->getData()->getPassword())
+                        'password' => md5($loginForm->getData()->getPassword())
                     ));
 
             if ($user) {
@@ -86,9 +86,9 @@ class DefaultController extends Controller
 
         return $this->render('other/login.html.twig',
             array(
-                'loginForm'    => $loginForm->createView(),
+                'loginForm' => $loginForm->createView(),
                 'login_failed' => $login_failed,
-                'demo'=>''
+                'demo' => ''
             ));
     }
 
