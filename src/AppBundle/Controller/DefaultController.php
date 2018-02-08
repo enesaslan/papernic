@@ -87,7 +87,8 @@ class DefaultController extends Controller
         return $this->render('other/login.html.twig',
             array(
                 'loginForm'    => $loginForm->createView(),
-                'login_failed' => $login_failed
+                'login_failed' => $login_failed,
+                'demo'=>''
             ));
     }
 
