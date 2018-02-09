@@ -41,6 +41,7 @@
                     <td>{{ 'name'|trans }}</td>
                     <td>{{ 'phone'|trans }}</td>
                     <td>{{ 'gsm'|trans }}</td>
+                    <td>{{ 'email'|trans }}</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,7 @@
                             </td>
                             <td class="curHand" onclick="location.href='{{ path('contact_view', {'contact_id': l.contactId}) }}';">{{ l.phone }}</td>
                             <td class="curHand" onclick="location.href='{{ path('contact_view', {'contact_id': l.contactId}) }}';">{{ l.gsm }}</td>
+                            <td class="curHand" onclick="location.href='{{ path('contact_view', {'contact_id': l.contactId}) }}';">{{ l.email }}</td>
                         </tr>
                     {% endfor %}
 
