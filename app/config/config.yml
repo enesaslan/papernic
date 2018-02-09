@@ -46,11 +46,11 @@ doctrine:
 
           default:
             driver:   pdo_mysql
-            host:     '%shared_database_host%'
-            port:     '%shared_database_port%'
-            dbname:   '%shared_database%'
-            user:     '%shared_database_user%'
-            password: '%shared_database_password%'
+            host:     '%database_host%'
+            port:     '%database_port%'
+            dbname:   '%database_name%'
+            user:     '%database_user%'
+            password: '%database_password%'
             charset:  UTF8
 
     orm:
