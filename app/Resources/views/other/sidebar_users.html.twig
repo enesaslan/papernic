@@ -8,7 +8,7 @@
         {% endif %}
 
         <li>
-            <a href="javascript:void(0);" title="{{ u.fullName }}">
+            <a href="{{ url('user_profile_show', {'user_id': u.userId}) }}" title="{{ u.fullName }}">
                 <img src="{{ asset('images/user_placeholder.gif') }}" alt="">
                                 <span class="contactName">
                                     <strong>{{ u.fullName }}</strong>

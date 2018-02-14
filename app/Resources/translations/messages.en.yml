@@ -153,3 +153,4 @@ start: Start
 end: End
 optional: Optional
 reset_sort_order: Reset Sort Order
+user_permisssions: User Permissions

@@ -19,25 +19,21 @@
     <div class="fluid">
 
         <div class="widget grid6">
-            <div class="whead"><h6><span class="icon-user-3"></span>{{ 'your_details'|trans }}</h6>
+            <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_details'|trans }}</h6>
                 <div class="clear"></div>
             </div>
 
             <div class="body" style="line-height: 28px;">
-                <ul class="userList">
+                <ul>
+                    <li>
 
-
-                    <span class="contactName">
-
-        <label><span class="icon-user-2"></span>{{ 'username'|trans }}:</label>
+                        <label><span class="icon-user-2"></span>{{ 'username'|trans }}:</label>
                         {{ user_id.userName }}
-
-                        <br/>
-
-                <label><span class="icon-tag"></span>{{ 'full_name'|trans }}:</label>
+                    </li>
+                    <li>
+                        <label><span class="icon-tag"></span>{{ 'full_name'|trans }}:</label>
                         {{ user_id.fullName }}
-                    </span>
-
+                    </li>
 
                 </ul>
             </div>
@@ -45,7 +41,7 @@
         </div>
 
         <div class="widget grid6" style="background: url('{{ asset('images/bg-lock.png') }}') top right no-repeat;">
-            <div class="whead"><h6><span class="icon-locked"></span>{{ 'your_privileges'|trans }}</h6>
+            <div class="whead"><h6><span class="icon-locked"></span>{{ 'user_permisssions'|trans }}</h6>
                 <div class="clear"></div>
             </div>
 
