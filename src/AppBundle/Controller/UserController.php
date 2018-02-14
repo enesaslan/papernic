@@ -81,4 +81,25 @@ class UserController extends Controller
         );
     }
 
+
+    /**
+     * @Route("/user/profile/show/{user_id}", name="user_profile_show")
+     * @Method({"GET"})
+     */
+    public function userProfileShow(Request $request, $user_id)
+    {
+        if ($this->get('appbundle.utils')->checkSession($request) == false) {
+            return $this->redirectToRoute('login_form');
+        }
+        $this->get('appbundle.utils')->setCustomerConnection($this->getRequest(), $this);
+        $id = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->find($user_id);
+
+
+        return $this->render(
+            'other/user_profile_show.html.twig',
+            array('user_id' => $id)
+        );
+    }
+
+
 }
