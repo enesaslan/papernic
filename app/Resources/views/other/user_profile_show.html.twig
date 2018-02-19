@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} {{ user_id.fullName }} {% endblock %}
+{% block title %} {{ user.fullName }} {% endblock %}
 
 {% block content %}
 
@@ -28,11 +28,11 @@
                     <li>
 
                         <label><span class="icon-user-2"></span>{{ 'username'|trans }}:</label>
-                        {{ user_id.userName }}
+                        {{ user.userName }}
                     </li>
                     <li>
                         <label><span class="icon-tag"></span>{{ 'full_name'|trans }}:</label>
-                        {{ user_id.fullName }}
+                        {{ user.fullName }}
                     </li>
 
                 </ul>
@@ -50,36 +50,36 @@
 
                 <span class="greenBack" style="font-size: 12px;">
                 {{ 'role'|trans }}
-                    : <strong>{% if user_id.options.is_admin == true %} {{ 'admin'|trans }} {% else %} {{ 'user'|trans }} {% endif %}</strong>
+                    : <strong>{% if user.options.is_admin == true %} {{ 'admin'|trans }} {% else %} {{ 'user'|trans }} {% endif %}</strong>
                 </span>
 
                     <ul class="liDone" style="margin-top: 15px;">
 
-                        {% if user_id.options.priv_document_edit == true %}
+                        {% if user.options.priv_document_edit == true %}
                             <li>{{ 'priv_document_edit'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_document_delete == true %}
+                        {% if user.options.priv_document_delete == true %}
                             <li>{{ 'priv_document_delete'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_contact_edit == true %}
+                        {% if user.options.priv_contact_edit == true %}
                             <li>{{ 'priv_contact_edit'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_contact_delete == true %}
+                        {% if user.options.priv_contact_delete == true %}
                             <li>{{ 'priv_contact_delete'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_upload == true %}
+                        {% if user.options.priv_file_upload == true %}
                             <li>{{ 'priv_file_upload'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_download == true %}
+                        {% if user.options.priv_file_download == true %}
                             <li>{{ 'priv_file_download'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_delete == true %}
+                        {% if user.options.priv_file_delete == true %}
                             <li>{{ 'priv_file_delete'|trans }}</li>
                         {% endif %}
 
@@ -94,7 +94,7 @@
     <div class="fluid">
 
         <div class="widget grid12">
-            <div class="whead"><h6><span class="icon-list_nested"></span>{{ 'document_list'|trans }}</h6>
+            <div class="whead"><h6><span class="icon-list_nested"></span>{{ 'recent_10_documents_by_user'|trans }}</h6>
                 <div class="clear"></div>
             </div>
 
@@ -107,27 +107,23 @@
                     {% else %}
                         {% set dir = 'asc' %}
                     {% endif %}
-                    <td class="curHand" style="border-left: 0;"
-                    <a href="{{ path('documents_sort', {'column': 'document.document_subject', 'dir': dir}) }}"
-                       class="pastelRed">{{ 'subject'|trans }}</a>
+                    <td class="curHand" style="border-left: 0;">
+                    {{ 'subject'|trans }}
                     </td>
-                    <td class="curHand"
-                    <a href="{{ path('documents_sort', {'column': 'type.document_type', 'dir': dir}) }}"
-                       class="pastelRed">{{ 'type'|trans }}</a>
+                    <td class="curHand">
+                    {{ 'type'|trans }}
                     </td>
-                    <td class="curHand"
-                    <a href="{{ path('documents_sort', {'column': 'category.document_category', 'dir': dir}) }}"
-                       class="pastelRed">{{ 'category'|trans }}</a>
+                    <td class="curHand">
+                    {{ 'category'|trans }}
                     </td>
-                    <td class="curHand"
-                    <a href="{{ path('documents_sort', {'column': 'contact.contact_name', 'dir': dir}) }}"
-                       class="pastelRed">{{ 'from_contact'|trans }}</a>
+                    <td class="curHand">
+                    {{ 'from_contact'|trans }}
                     </td>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% if total > 0 %}
+                {% if list %}
 
                     {% for l in list %}
                         <tr>
@@ -143,7 +139,7 @@
                                                         class="icos-email"></span>{{ 'send_via_email'|trans }}
                                             </a>
                                         </li>
-                                        {% if user_id.options.priv_document_delete == true %}
+                                        {% if app.session.get('user_options').priv_document_delete == true %}
                                             <li>
                                                 <a href="javascript:void(0);"
                                                    onClick="if (confirm('{{ 'are_you_sure'|trans }}')) { location.href = '{{ path('document_delete', {'document_id': l.document_document_id}) }}'; }"><span
@@ -153,7 +149,7 @@
                                         {% endif %}
                                     </ul>
                                 </div>
-                            <td style="border-left: 0;" class="curHand">
+                            <td style="border-left: 0;" class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">
                                 {{ l.document_document_subject }}</td>
                             <td class="curHand">
                                 {{ l.type_document_type }}</td>
@@ -175,20 +171,6 @@
 
             <div class="fg-toolbar tableFooter">
                 <div class="dataTables_info" id="DataTables_Table_0_info">
-                    <strong>{{ total }}</strong> {{ 'records_found'|trans }}
-                </div>
-                <div class="dataTables_paginate paging_full_numbers" id="DataTables_Table_0_paginate">
-                    {{ 'go_to_page'|trans }} &nbsp;
-                    <select name="select_page" id="select_page">
-                        {% for i in 1..pageCount %}
-                            {% if i == page %}
-                                {% set sel = ' selected="selected" ' %}
-                            {% else %}
-                                {% set sel = '' %}
-                            {% endif %}
-                            <option {{ sel }} value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
                 </div>
             </div>
 

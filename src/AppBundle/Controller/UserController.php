@@ -81,7 +81,6 @@ class UserController extends Controller
         );
     }
 
-
     /**
      * @Route("/user/profile/show/{user_id}", name="user_profile_show")
      * @Method({"GET"})
@@ -91,49 +90,36 @@ class UserController extends Controller
         if ($this->get('appbundle.utils')->checkSession($request) == false) {
             return $this->redirectToRoute('login_form');
         }
-        $this->get('appbundle.utils')->setCustomerConnection($this->getRequest(), $this);
-        $id = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->find($user_id);
-        $session = $request->getSession();
 
-        if ($page == 1) {
-            $start = 0;
-        } else {
-            $start = ($page - 1) * $session->get('user_options')['document_list_show'];
-        }
+        $this->get('appbundle.utils')->setCustomerConnection($this->getRequest(), $this);
+        $user = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->find($user_id);
+        $session = $request->getSession();
 
         $em = $this->getDoctrine()->getManager('default');
 
         $qb = $em->createQueryBuilder()->from('AppBundle:Document',
             'document')->select('document, type, category, contact');
 
-        $list = $qb->leftJoin("AppBundle:DocumentType", "type", "WITH", "document.type_id = type.document_type_id");
-        $list = $qb->leftJoin("AppBundle:DocumentCategory", "category", "WITH",
+        $qb->leftJoin("AppBundle:DocumentType", "type", "WITH", "document.type_id = type.document_type_id");
+        $qb->leftJoin("AppBundle:DocumentCategory", "category", "WITH",
             "document.category_id = category.document_category_id");
-        $list = $qb->leftJoin("AppBundle:Contact", "contact", "WITH", "document.from_contact = contact.contact_id");
-        $list = $qb->andWhere('document.is_deleted = false');
-        $list = $qb->andWhere('document.is_temp = false');
-        $list = $qb->andWhere('document.user_id = :id');
-        $list->setParameter('id', $id);
-        $list = $qb->orderBy($session->get('document_sort_column'), $session->get('document_sort_dir'));
+        $qb->leftJoin("AppBundle:Contact", "contact", "WITH", "document.from_contact = contact.contact_id");
+        $qb->andWhere('document.is_deleted = false');
+        $qb->andWhere('document.is_temp = false');
+        $qb->andWhere('document.user_id = :user_id');
+        $qb->setParameter('user_id', $user);
+        $qb->orderBy($session->get('document_sort_column'), $session->get('document_sort_dir'));
+        $qb->setMaxResults(10);
 
         $list = $qb->getQuery()->getResult(Query::HYDRATE_SCALAR);
 
-        $total = count($list);
-        $pageCount = ceil($total / $session->get('user_options')['document_list_show']);
-
-        $list = $qb->setFirstResult($start);
-        $list = $qb->setMaxResults(10);
-        $list = $qb->getQuery()->getResult(Query::HYDRATE_SCALAR);
         return $this->render(
             'other/user_profile_show.html.twig',
-            array('user_id' => $id,
-                'list' => $list,
-                'total' => $total,
-                'pageCount' => $pageCount,
-                'page' => $page,
-                'success' => $this->success)
+            array(
+                'user' => $user,
+                'list' => $list
+            )
         );
     }
-
 
 }
