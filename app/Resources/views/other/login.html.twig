@@ -33,11 +33,13 @@
         {% if demo == true %}
 
             {% set user_no = random(1..5) %}
+            {% set demo_company = "demo_company" %}
             {% set demo_user = "demo_user_" ~ user_no %}
             {% set demo_password = "demo_password" %}
 
         {% else %}
 
+            {% set demo_company = "" %}
             {% set demo_user = "" %}
             {% set demo_password = "" %}
 
@@ -51,7 +53,8 @@
 
         <div class="logControl">
             <div class="memory">
-                <img src="{{ asset('images/ssl.png') }}" style="float: left; margin-right: 8px; margin-top: 3px;"/> {{ 'secure_connection'|trans }}
+                <img src="{{ asset('images/ssl.png') }}"
+                     style="float: left; margin-right: 8px; margin-top: 3px;"/> {{ 'secure_connection'|trans }}
             </div>
             {{ form_widget(loginForm.btn_login, {'attr': {'class': 'buttonM bRed formSubmit'},  'label': 'login'|trans}) }}
             <div class="clear"></div>
@@ -59,7 +62,6 @@
     </fieldset>
 
     {{ form_end(loginForm) }}
-
 </div>
 
 </body>
