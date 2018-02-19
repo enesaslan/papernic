@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %} {{ user_id.fullName }} {% endblock %}
+{% block title %} {{ user.fullName }} {% endblock %}
 
 {% block content %}
 
@@ -28,11 +28,11 @@
                     <li>
 
                         <label><span class="icon-user-2"></span>{{ 'username'|trans }}:</label>
-                        {{ user_id.userName }}
+                        {{ user.userName }}
                     </li>
                     <li>
                         <label><span class="icon-tag"></span>{{ 'full_name'|trans }}:</label>
-                        {{ user_id.fullName }}
+                        {{ user.fullName }}
                     </li>
 
                 </ul>
@@ -50,36 +50,36 @@
 
                 <span class="greenBack" style="font-size: 12px;">
                 {{ 'role'|trans }}
-                    : <strong>{% if user_id.options.is_admin == true %} {{ 'admin'|trans }} {% else %} {{ 'user'|trans }} {% endif %}</strong>
+                    : <strong>{% if user.options.is_admin == true %} {{ 'admin'|trans }} {% else %} {{ 'user'|trans }} {% endif %}</strong>
                 </span>
 
                     <ul class="liDone" style="margin-top: 15px;">
 
-                        {% if user_id.options.priv_document_edit == true %}
+                        {% if user.options.priv_document_edit == true %}
                             <li>{{ 'priv_document_edit'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_document_delete == true %}
+                        {% if user.options.priv_document_delete == true %}
                             <li>{{ 'priv_document_delete'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_contact_edit == true %}
+                        {% if user.options.priv_contact_edit == true %}
                             <li>{{ 'priv_contact_edit'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_contact_delete == true %}
+                        {% if user.options.priv_contact_delete == true %}
                             <li>{{ 'priv_contact_delete'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_upload == true %}
+                        {% if user.options.priv_file_upload == true %}
                             <li>{{ 'priv_file_upload'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_download == true %}
+                        {% if user.options.priv_file_download == true %}
                             <li>{{ 'priv_file_download'|trans }}</li>
                         {% endif %}
 
-                        {% if user_id.options.priv_file_delete == true %}
+                        {% if user.options.priv_file_delete == true %}
                             <li>{{ 'priv_file_delete'|trans }}</li>
                         {% endif %}
 
@@ -90,5 +90,110 @@
         </div>
 
     </div>
+
+    <div class="fluid">
+
+        <div class="widget grid12">
+            <div class="whead"><h6><span class="icon-list_nested"></span>{{ 'recent_10_documents_by_user'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" width="100%" class="tDefault">
+                <thead>
+                <tr>
+                    <td style="width: 20px;"></td>
+                    {% if app.session.get('document_sort_dir') == 'asc' %}
+                        {% set dir = 'desc' %}
+                    {% else %}
+                        {% set dir = 'asc' %}
+                    {% endif %}
+                    <td class="curHand" style="border-left: 0;">
+                    {{ 'subject'|trans }}
+                    </td>
+                    <td class="curHand">
+                    {{ 'type'|trans }}
+                    </td>
+                    <td class="curHand">
+                    {{ 'category'|trans }}
+                    </td>
+                    <td class="curHand">
+                    {{ 'from_contact'|trans }}
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if list %}
+
+                    {% for l in list %}
+                        <tr>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" class="tablectrl_small bLightBlue" data-toggle="dropdown"><span
+                                                class="icon-curved_arrow"
+                                                style="margin-right: 1px; line-height: 12px;"></span></a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:void(0);" class="a-send-email"
+                                               data-document-id="{{ l.document_document_id }}"><span
+                                                        class="icos-email"></span>{{ 'send_via_email'|trans }}
+                                            </a>
+                                        </li>
+                                        {% if app.session.get('user_options').priv_document_delete == true %}
+                                            <li>
+                                                <a href="javascript:void(0);"
+                                                   onClick="if (confirm('{{ 'are_you_sure'|trans }}')) { location.href = '{{ path('document_delete', {'document_id': l.document_document_id}) }}'; }"><span
+                                                            class="icos-trash"></span>{{ 'delete'|trans }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            <td style="border-left: 0;" class="curHand" onclick="location.href='{{ path('document_view', {'document_id': l.document_document_id}) }}';">
+                                {{ l.document_document_subject }}</td>
+                            <td class="curHand">
+                                {{ l.type_document_type }}</td>
+                            <td class="curHand">
+                                {{ l.category_document_category }}</td>
+                            <td class="curHand">
+                                {{ l.contact_contact_name }}</td>
+                        </tr>
+                    {% endfor %}
+
+                {% else %}
+
+                    <div style="text-align: center; padding: 20px 0;">{{ 'no_records_found'|trans }}</div>
+
+                {% endif %}
+
+                </tbody>
+            </table>
+
+            <div class="fg-toolbar tableFooter">
+                <div class="dataTables_info" id="DataTables_Table_0_info">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').on('click', '.a-send-email', function () {
+                var dialog1 = $("#email_dialog").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 630
+                });
+
+                var eUrl = '{{ path('compose_email', {'type': 'document', 'entity_id': '000'}) }}';
+                dialog1.load(eUrl.replace('000', $(this).data('document-id'))).dialog('open');
+
+            });
+        });
+    </script>
+
 
 {% endblock %}
