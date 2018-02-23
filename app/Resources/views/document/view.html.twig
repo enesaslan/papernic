@@ -191,6 +191,30 @@
 
         </div>
 
+        <div class="widget grid4">
+            <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_relations'|trans }}</h6>
+                <div class="clear"></div>
+            </div>
+            <ul >
+                <div class="formRow"  >
+                    <div class="grid5">
+                        <label> {{ 'from_contact'|trans }}</label>
+                        <select id="user_add">
+                            <option>Seçiniz...</option>
+                            {% for l in user %}
+                                <option>{{ l.fullName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <input type="button" id="btn_add" class="buttonS  bLightBlue " value="{{ 'add'|trans }}"/>
+                    </div>
+                    <div class="clear"></div>
+                    <div id="useradd" ></div>
+                </div>
+            </ul>
+        </div>
+
     </div>
 
     <script type="text/javascript">
@@ -348,6 +372,7 @@
                 $('#category_add_label').show();
             });
 
+
             $('body').on('click', '#send-all-via-email', function () {
                 var dialog1 = $("#email_dialog").dialog({
                     autoOpen: false,
@@ -356,6 +381,12 @@
                 });
 
                 dialog1.load('{{ path('compose_email', {'type': 'document', 'entity_id': document_id}) }}').dialog('open');
+            });
+
+
+            $('#btn_add').click(function () {
+                var selected = $('#user_add option:selected').val();
+                $("#useradd").append('<li>' + selected + '</li>');
             });
 
         });

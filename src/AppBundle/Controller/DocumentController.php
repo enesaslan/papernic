@@ -352,9 +352,8 @@ class DocumentController extends Controller
         }
 
         $session = $request->getSession();
-
+        $user = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->findAll();
         $this->get('appbundle.utils')->setCustomerConnection($request, $this);
-
         $man = $this->getDoctrine()->getManager('default');
         $document = $man->getRepository('AppBundle:Document')->find($document_id);
         $document->date_format = $request->getSession()->get('user_options')['date_format'];
@@ -531,7 +530,7 @@ class DocumentController extends Controller
         $disk_usage_percent = ($disk_usage * 100) / $session->get('customer_disk_limit');
 
         return $this->render('document/view.html.twig',
-            array(
+            array('user'  =>$user,
                 'documentForm'       => $documentForm->createView(),
                 'document_id'        => $document_id,
                 'file_list'          => $file_list,
@@ -712,7 +711,6 @@ class DocumentController extends Controller
         }
 
         $this->get('appbundle.utils')->setCustomerConnection($request, $this);
-
         $document = new Document();
         $document->setIsTemp(true);
         $document->setTempTimestamp(time());
@@ -727,10 +725,12 @@ class DocumentController extends Controller
             $request->getSession()->set('document_count',
                 $this->getDoctrine()->getManager('default')->getRepository('AppBundle:Document')->documentCount($request,
                     $this));
+
             return $this->viewDocument($request, $document->getDocumentId());
         } catch (Exception $e) {
             $this->success = false;
         }
     }
+
 
 }
