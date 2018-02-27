@@ -197,16 +197,15 @@
             </div>
             <ul >
                 <div class="formRow"  >
-                    <div class="grid5">
-                        <label> {{ 'from_contact'|trans }}</label>
+                    <div class="grid8" >
                         <select id="user_add">
                             <option>Seçiniz...</option>
-                            {% for l in user %}
-                                <option>{{ l.fullName }}</option>
+                            {% for  l in user %}
+                                <option id={{ l.userId }}>{{ l.fullName }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div>
+                    <div class="grid4">
                         <input type="button" id="btn_add" class="buttonS  bLightBlue " value="{{ 'add'|trans }}"/>
                     </div>
                     <div class="clear"></div>
@@ -386,7 +385,16 @@
 
             $('#btn_add').click(function () {
                 var selected = $('#user_add option:selected').val();
-                $("#useradd").append('<li>' + selected + '</li>');
+                var idselected = $('#user_add option:selected').attr('id');
+                var idarray = new Array();
+                idarray.push(idselected);
+
+                if(idarray[idselected]==idselected){
+                    return false;
+                }else{
+                    $("#useradd").append('<li>' + selected + '</li>');
+                }
+
             });
 
         });
