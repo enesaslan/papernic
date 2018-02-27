@@ -11,7 +11,7 @@
                 <div class="clear"></div>
             </div>
 
-            {{ form_start(documentForm) }}
+            {{ form_start(documentForm, {'attr': {'id': 'form_document'}}) }}
             {{ form_errors(documentForm) }}
 
             <div class="formRow">
@@ -115,6 +115,8 @@
 
                 <div class="clear"></div>
 
+                {{ form_widget(documentForm.related_users) }}
+
             </div>
 
             <div class="widgetButtons">
@@ -213,11 +215,10 @@
             <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_relations'|trans }}</h6>
                 <div class="clear"></div>
             </div>
-            <ul>
                 <div class="formRow">
                     <div class="grid8">
                         <select id="user_add" style="width: 95%;">
-                            {% for l in user %}
+                            {% for l in userList %}
                                 <option value={{ l.userId }}>{{ l.fullName }}</option>
                             {% endfor %}
                         </select>
@@ -234,9 +235,6 @@
                     </div>
                 </div>
         </div>
-        </ul>
-    </div>
-
     </div>
 
     <script type="text/javascript">
@@ -244,6 +242,10 @@
 
             jQuery('#btnUpload').click(function () {
                 jQuery('#file').click();
+            });
+
+            jQuery('#form_document').submit(function () {
+                $("#form_related_users").val(JSON.stringify(idarray));
             });
 
             jQuery('#file').change(function () {

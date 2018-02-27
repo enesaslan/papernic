@@ -8,6 +8,7 @@ use AppBundle\Entity\Contact;
 use AppBundle\Entity\DocumentType;
 use AppBundle\Entity\DocumentCategory;
 use AppBundle\Entity\DocumentFile;
+use AppBundle\Entity\DocumentUser;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -48,9 +49,9 @@ class DocumentController extends Controller
         return $this->render(
             'other/sidebar_search_document.html.twig',
             array(
-                'types'      => $types,
+                'types' => $types,
                 'categories' => $categories,
-                'contacts'   => $contacts
+                'contacts' => $contacts
             )
         );
     }
@@ -218,9 +219,9 @@ class DocumentController extends Controller
 
         return $this->render('document/definitions.html.twig',
             array(
-                'type_list'     => $type_list,
+                'type_list' => $type_list,
                 'category_list' => $category_list,
-                'success'       => $this->success
+                'success' => $this->success
             ));
     }
 
@@ -352,7 +353,7 @@ class DocumentController extends Controller
         }
 
         $session = $request->getSession();
-        $user = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->findAll();
+        $userList = $this->getDoctrine()->getManager('default')->getRepository('AppBundle:User')->findAll();
         $this->get('appbundle.utils')->setCustomerConnection($request, $this);
         $man = $this->getDoctrine()->getManager('default');
         $document = $man->getRepository('AppBundle:Document')->find($document_id);
@@ -405,41 +406,41 @@ class DocumentController extends Controller
                 array('required' => false, 'html5' => false, 'widget' => 'single_text', 'format' => 'yyyy-MM-dd'))
             ->add('filing_cabinet_no', TextType::class, array('required' => false))
             ->add('from_contact', EntityType::class, array(
-                'class'         => 'AppBundle:Contact',
-                'choice_label'  => 'contact_name',
-                'choice_value'  => 'contact_id',
-                'required'      => false,
-                'placeholder'   => $this->get('translator')->trans('choose'),
+                'class' => 'AppBundle:Contact',
+                'choice_label' => 'contact_name',
+                'choice_value' => 'contact_id',
+                'required' => false,
+                'placeholder' => $this->get('translator')->trans('choose'),
                 'query_builder' => function () use ($lookupContact) {
                     return $lookupContact;
                 }
             ))
             ->add('to_contact', EntityType::class, array(
-                'class'         => 'AppBundle:Contact',
-                'choice_label'  => 'contact_name',
-                'choice_value'  => 'contact_id',
-                'required'      => false,
-                'placeholder'   => $this->get('translator')->trans('choose'),
+                'class' => 'AppBundle:Contact',
+                'choice_label' => 'contact_name',
+                'choice_value' => 'contact_id',
+                'required' => false,
+                'placeholder' => $this->get('translator')->trans('choose'),
                 'query_builder' => function () use ($lookupContact) {
                     return $lookupContact;
                 }
             ))
             ->add('type_id', EntityType::class, array(
-                'class'         => 'AppBundle:DocumentType',
-                'choice_label'  => 'document_type',
-                'choice_value'  => 'document_type_id',
-                'required'      => false,
-                'placeholder'   => $this->get('translator')->trans('choose'),
+                'class' => 'AppBundle:DocumentType',
+                'choice_label' => 'document_type',
+                'choice_value' => 'document_type_id',
+                'required' => false,
+                'placeholder' => $this->get('translator')->trans('choose'),
                 'query_builder' => function () use ($lookupType) {
                     return $lookupType;
                 }
             ))
             ->add('category_id', EntityType::class, array(
-                'class'         => 'AppBundle:DocumentCategory',
-                'choice_label'  => 'document_category',
-                'choice_value'  => 'document_category_id',
-                'required'      => false,
-                'placeholder'   => $this->get('translator')->trans('choose'),
+                'class' => 'AppBundle:DocumentCategory',
+                'choice_label' => 'document_category',
+                'choice_value' => 'document_category_id',
+                'required' => false,
+                'placeholder' => $this->get('translator')->trans('choose'),
                 'query_builder' => function () use ($lookupCategory) {
                     return $lookupCategory;
                 }
@@ -449,6 +450,7 @@ class DocumentController extends Controller
             ->add('to_contact_add', TextType::class, array('required' => false, 'mapped' => false))
             ->add('type_add', TextType::class, array('required' => false, 'mapped' => false))
             ->add('category_add', TextType::class, array('required' => false, 'mapped' => false))
+            ->add('related_users', HiddenType::class, array('required' => false, 'mapped' => false))
             ->add('btn_save_document', SubmitType::class)
             ->add('btn_cancel', ButtonType::class)
             ->getForm();
@@ -508,7 +510,27 @@ class DocumentController extends Controller
                 $document->setIsTemp(false);
                 $document->setTempTimestamp(null);
                 $document->setIsDeleted(false);
+
+                $man->persist($document);
                 $man->flush();
+
+                if (null !== $documentForm->get('related_users')->getData()) {
+                    $relatedUsers = json_decode($documentForm->get('related_users')->getData(), true);
+
+                    $deleteUsersQuery = $man->createQuery('DELETE FROM AppBundle:DocumentUser du WHERE du.document_id = :document_id')
+                        ->setParameter('document_id', $document_id);
+                    $deleteUsersQuery->execute();
+
+                    foreach ($relatedUsers as $relatedUser) {
+                        $documentUser = new DocumentUser();
+                        $documentUser->setDocumentId($document_id);
+                        $documentUser->setFromUserId($session->get('user_id'));
+                        $documentUser->setUserId($relatedUser);
+                        $man->persist($documentUser);
+                        $man->flush();
+                    }
+                }
+
                 $this->success = true;
             } catch (Exception $e) {
                 $this->success = false;
@@ -530,12 +552,13 @@ class DocumentController extends Controller
         $disk_usage_percent = ($disk_usage * 100) / $session->get('customer_disk_limit');
 
         return $this->render('document/view.html.twig',
-            array('user'  =>$user,
-                'documentForm'       => $documentForm->createView(),
-                'document_id'        => $document_id,
-                'file_list'          => $file_list,
-                'total_files'        => $total_files,
-                'disk_usage'         => $disk_usage,
+            array(
+                'userList' => $userList,
+                'documentForm' => $documentForm->createView(),
+                'document_id' => $document_id,
+                'file_list' => $file_list,
+                'total_files' => $total_files,
+                'disk_usage' => $disk_usage,
                 'disk_usage_percent' => $disk_usage_percent
             ));
     }
@@ -693,11 +716,11 @@ class DocumentController extends Controller
 
         return $this->render('document/list.html.twig',
             array(
-                'list'      => $list,
-                'total'     => $total,
+                'list' => $list,
+                'total' => $total,
                 'pageCount' => $pageCount,
-                'page'      => $page,
-                'success'   => $this->success
+                'page' => $page,
+                'success' => $this->success
             ));
     }
 
@@ -731,6 +754,5 @@ class DocumentController extends Controller
             $this->success = false;
         }
     }
-
 
 }
