@@ -57,7 +57,9 @@
             <div class="formRow">
 
                 <div class="grid6">
-                    <label>{{ 'from_contact'|trans }} &nbsp; - &nbsp; <a id="from_contact_add_label">{{ 'add_new'|trans }}</a><a id="from_contact_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    <label>{{ 'from_contact'|trans }} &nbsp; - &nbsp; <a
+                                id="from_contact_add_label">{{ 'add_new'|trans }}</a><a id="from_contact_cancel_label"
+                                                                                        style="display: none;">{{ 'cancel'|trans }}</a></label>
                     {{ form_widget(documentForm.from_contact) }}
                     <div id="from_contact_add_div" style="display: none;">
                         {{ form_widget(documentForm.from_contact_add) }}
@@ -65,7 +67,9 @@
                 </div>
 
                 <div class="grid6">
-                    <label>{{ 'to_contact'|trans }} &nbsp; - &nbsp; <a id="to_contact_add_label">{{ 'add_new'|trans }}</a><a id="to_contact_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    <label>{{ 'to_contact'|trans }} &nbsp; - &nbsp; <a
+                                id="to_contact_add_label">{{ 'add_new'|trans }}</a><a id="to_contact_cancel_label"
+                                                                                      style="display: none;">{{ 'cancel'|trans }}</a></label>
                     {{ form_widget(documentForm.to_contact) }}
                     <div id="to_contact_add_div" style="display: none;">
                         {{ form_widget(documentForm.to_contact_add) }}
@@ -79,7 +83,9 @@
             <div class="formRow">
 
                 <div class="grid6">
-                    <label>{{ 'document_type'|trans }} &nbsp; - &nbsp; <a id="type_add_label">{{ 'add_new'|trans }}</a><a id="type_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    <label>{{ 'document_type'|trans }} &nbsp; - &nbsp; <a
+                                id="type_add_label">{{ 'add_new'|trans }}</a><a id="type_cancel_label"
+                                                                                style="display: none;">{{ 'cancel'|trans }}</a></label>
                     {{ form_widget(documentForm.type_id) }}
                     <div id="type_add_div" style="display: none;">
                         {{ form_widget(documentForm.type_add) }}
@@ -87,7 +93,9 @@
                 </div>
 
                 <div class="grid6">
-                    <label>{{ 'document_category'|trans }} &nbsp; - &nbsp; <a id="category_add_label">{{ 'add_new'|trans }}</a><a id="category_cancel_label" style="display: none;">{{ 'cancel'|trans }}</a></label>
+                    <label>{{ 'document_category'|trans }} &nbsp; - &nbsp; <a
+                                id="category_add_label">{{ 'add_new'|trans }}</a><a id="category_cancel_label"
+                                                                                    style="display: none;">{{ 'cancel'|trans }}</a></label>
                     {{ form_widget(documentForm.category_id) }}
                     <div id="category_add_div" style="display: none;">
                         {{ form_widget(documentForm.category_add) }}
@@ -128,9 +136,11 @@
         <div class="widget grid4">
             <div class="whead"><h6><span class="icon-upload"></span>{{ 'attached_files'|trans }}</h6>
                 <div class="titleOpt">
-                    <a href="#" data-toggle="dropdown"><span class="icos-arrowdown"></span><span class="clear"></span></a>
+                    <a href="#" data-toggle="dropdown"><span class="icos-arrowdown"></span><span
+                                class="clear"></span></a>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="#" id="send-all-via-email"><span class="icos-email"></span>{{ 'send_all_via_email'|trans }}</a></li>
+                        <li><a href="#" id="send-all-via-email"><span
+                                        class="icos-email"></span>{{ 'send_all_via_email'|trans }}</a></li>
                     </ul>
                 </div>
                 <div class="clear"></div>
@@ -141,14 +151,19 @@
                     <div class="fileProcess">
                         <form id="upload-form" style="margin-top: 5px;">
                             <input type="file" id="file" name="file" multiple style="display: none" ;/>
-                            <button type="button" id="btnUpload" class="buttonL bLightBlue" value="{{ 'upload_files'|trans }}" style="margin-bottom: 10px; width: 100%;">
+                            <button type="button" id="btnUpload" class="buttonL bLightBlue"
+                                    value="{{ 'upload_files'|trans }}" style="margin-bottom: 10px; width: 100%;">
                                 <span class="icon-upload-4"></span>
                                 {{ 'upload_files'|trans }}
                             </button>
 
                             <div id="progress1" style="height: 40px;">
-                                <span id="pb" style="background: #FFF; border: 1px solid #eee; box-shadow: none; height: 8px; margin: 0; padding: 0;" class="pbar ui-progressbar ui-widget ui-widget-content ui-corner-all" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                    <div id="progressvalue" class="ui-progressbar-value ui-widget-header ui-corner-left" style="width: 0%;"></div>
+                                <span id="pb"
+                                      style="background: #FFF; border: 1px solid #eee; box-shadow: none; height: 8px; margin: 0; padding: 0;"
+                                      class="pbar ui-progressbar ui-widget ui-widget-content ui-corner-all"
+                                      role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                    <div id="progressvalue" class="ui-progressbar-value ui-widget-header ui-corner-left"
+                                         style="width: 0%;"></div>
                                 </span>
                                 <span class="percent" id="percent">0%</span>
                                 <span class="elapsed" id="elapsed"></span>
@@ -163,7 +178,8 @@
                     {% for l in file_list %}
 
                         <li id="file-id-{{ l.file_file_id }}" class="file-row">
-                            <a href="javascript:void(0);" class="send-email" data-file-id="{{ l.file_file_id }}"><span class="icon-email" style="color: #BA6D6D;"></span></a>
+                            <a href="javascript:void(0);" class="send-email" data-file-id="{{ l.file_file_id }}"><span
+                                        class="icon-email" style="color: #BA6D6D;"></span></a>
                             <a href="{{ path('file_download', {'file_id': l.file_file_id, 'file_name': l.file_file_name}) }}">{{ l.file_file_name }}</a>
                             {% if app.session.get('user_options').priv_file_delete == true %}
                                 <span data-file-id="{{ l.file_file_id }}" class="remove btnFileDelete"></span>
@@ -178,11 +194,13 @@
                     <div class="fileProcess">
                         <strong>{{ 'disk_usage_details'|trans }}</strong>
                         <div class="fileProgress">
-                            {{ 'used'|trans }}: {{ disk_usage }} MB / {{ app.session.get('customer_disk_limit') }} MB - %{{ disk_usage_percent }}
+                            {{ 'used'|trans }}: {{ disk_usage }} MB / {{ app.session.get('customer_disk_limit') }} MB -
+                            %{{ disk_usage_percent }}
                         </div>
 
                         <div class="contentProgress" style="margin-bottom: 8px;">
-                            <div class="barG tipN" title="{{ disk_usage_percent }}%" id="bar10" style="width: {{ disk_usage_percent }}%;"></div>
+                            <div class="barG tipN" title="{{ disk_usage_percent }}%" id="bar10"
+                                 style="width: {{ disk_usage_percent }}%;"></div>
                         </div>
                     </div>
                 </li>
@@ -195,24 +213,29 @@
             <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_relations'|trans }}</h6>
                 <div class="clear"></div>
             </div>
-            <ul >
-                <div class="formRow"  >
-                    <div class="grid8" >
-                        <select id="user_add">
-                            <option>Seçiniz...</option>
+            <ul>
+                <div class="formRow">
+                    <div class="grid8">
+                        <select id="user_add" style="width: 95%;">
                             {% for l in user %}
                                 <option value={{ l.userId }}>{{ l.fullName }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="grid4">
-                        <input type="button" id="btn_add" class="buttonS  bLightBlue " value="{{ 'add'|trans }}"/>
+                        <input type="button" id="btn_add" class="buttonS bDefault" value="{{ 'add'|trans }}"
+                               style="width: 100%;"/>
                     </div>
-                    <div class="clear"></div>
-                    <div id="useradd" ></div>
                 </div>
-            </ul>
+                <div class="formRow">
+                    <div class="grid12" style="margin: 10px 0;">
+                            <ul id="useradd" class="liArrow">
+                            </ul>
+                    </div>
+                </div>
         </div>
+        </ul>
+    </div>
 
     </div>
 
@@ -311,14 +334,14 @@
                 dialog1.load(eUrl.replace('000', $(this).data('file-id'))).dialog('open');
             });
 
-            $('#from_contact_add_label').click( function () {
-               $('#form_from_contact').hide();
+            $('#from_contact_add_label').click(function () {
+                $('#form_from_contact').hide();
                 $('#from_contact_add_label').hide();
                 $('#from_contact_add_div').show();
                 $('#from_contact_cancel_label').show();
             });
 
-            $('#from_contact_cancel_label').click( function () {
+            $('#from_contact_cancel_label').click(function () {
                 $('#from_contact_add_div').hide();
                 $('#from_contact_cancel_label').hide();
                 $('#form_from_contact_add').val('');
@@ -326,14 +349,14 @@
                 $('#from_contact_add_label').show();
             });
 
-            $('#to_contact_add_label').click( function () {
+            $('#to_contact_add_label').click(function () {
                 $('#form_to_contact').hide();
                 $('#to_contact_add_label').hide();
                 $('#to_contact_add_div').show();
                 $('#to_contact_cancel_label').show();
             });
 
-            $('#to_contact_cancel_label').click( function () {
+            $('#to_contact_cancel_label').click(function () {
                 $('#to_contact_add_div').hide();
                 $('#to_contact_cancel_label').hide();
                 $('#form_to_contact_add').val('');
@@ -341,14 +364,14 @@
                 $('#to_contact_add_label').show();
             });
 
-            $('#type_add_label').click( function () {
+            $('#type_add_label').click(function () {
                 $('#form_type_id').hide();
                 $('#type_add_label').hide();
                 $('#type_add_div').show();
                 $('#type_cancel_label').show();
             });
 
-            $('#type_cancel_label').click( function () {
+            $('#type_cancel_label').click(function () {
                 $('#type_add_div').hide();
                 $('#type_cancel_label').hide();
                 $('#form_type_add').val('');
@@ -356,14 +379,14 @@
                 $('#type_add_label').show();
             });
 
-            $('#category_add_label').click( function () {
+            $('#category_add_label').click(function () {
                 $('#form_category_id').hide();
                 $('#category_add_label').hide();
                 $('#category_add_div').show();
                 $('#category_cancel_label').show();
             });
 
-            $('#category_cancel_label').click( function () {
+            $('#category_cancel_label').click(function () {
                 $('#category_add_div').hide();
                 $('#category_cancel_label').hide();
                 $('#form_category_add').val('');
@@ -383,17 +406,16 @@
             });
 
 
-            var idarray = new Array();
+            var idarray = [];
 
             $('#btn_add').click(function () {
-                var selected = $('#user_add option:selected').text();
+                var selected = $('#user_add').find('option:selected').text();
                 var idselected = $('#user_add').val();
 
                 if (idarray.indexOf(idselected) === -1) {
-                    $("#useradd").append('<li>' + selected + '</li>');
+                    $("#useradd").append('<li class="user-add-row">' + selected + '</li>');
+                    idarray.push(idselected);
                 }
-
-                idarray.push(idselected);
 
             });
 
