@@ -200,8 +200,8 @@
                     <div class="grid8" >
                         <select id="user_add">
                             <option>Seçiniz...</option>
-                            {% for  l in user %}
-                                <option id={{ l.userId }}>{{ l.fullName }}</option>
+                            {% for l in user %}
+                                <option value={{ l.userId }}>{{ l.fullName }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -383,17 +383,17 @@
             });
 
 
-            $('#btn_add').click(function () {
-                var selected = $('#user_add option:selected').val();
-                var idselected = $('#user_add option:selected').attr('id');
-                var idarray = new Array();
-                idarray.push(idselected);
+            var idarray = new Array();
 
-                if(idarray[idselected]==idselected){
-                    return false;
-                }else{
+            $('#btn_add').click(function () {
+                var selected = $('#user_add option:selected').text();
+                var idselected = $('#user_add').val();
+
+                if (idarray.indexOf(idselected) === -1) {
                     $("#useradd").append('<li>' + selected + '</li>');
                 }
+
+                idarray.push(idselected);
 
             });
 
