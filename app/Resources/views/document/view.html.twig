@@ -215,25 +215,26 @@
             <div class="whead"><h6><span class="icon-user-3"></span>{{ 'user_relations'|trans }}</h6>
                 <div class="clear"></div>
             </div>
-                <div class="formRow">
-                    <div class="grid8">
-                        <select id="user_add" style="width: 95%;">
-                            {% for l in userList %}
-                                <option value={{ l.userId }}>{{ l.fullName }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="grid4">
-                        <input type="button" id="btn_add" class="buttonS bDefault" value="{{ 'add'|trans }}"
-                               style="width: 100%;"/>
-                    </div>
+            <div class="formRow">
+                <div class="grid8">
+                    <select id="user_add" style="width: 95%;">
+                        {% for l in userList %}
+                            <option value={{ l.userId }}>{{ l.fullName }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div class="formRow">
-                    <div class="grid12" style="margin: 10px 0;">
-                            <ul id="useradd" class="liArrow">
-                            </ul>
-                    </div>
+                <div class="grid4">
+                    <input type="button" id="btn_add" class="buttonS bDefault" value="{{ 'add'|trans }}"
+                           style="width: 100%;"/>
                 </div>
+            </div>
+            <div class="formRow">
+                <div class="grid12" style="margin: 10px 0;">
+                    <ul id="useradd" class="liArrow">
+                    </ul>
+                </div>
+
+            </div>
         </div>
     </div>
 
@@ -407,16 +408,18 @@
                 dialog1.load('{{ path('compose_email', {'type': 'document', 'entity_id': document_id}) }}').dialog('open');
             });
 
-
             var idarray = [];
-
             $('#btn_add').click(function () {
                 var selected = $('#user_add').find('option:selected').text();
                 var idselected = $('#user_add').val();
 
                 if (idarray.indexOf(idselected) === -1) {
-                    $("#useradd").append('<li class="user-add-row">' + selected + '</li>');
+                    $("#useradd").append('<li  class="user-add-row">' + selected + '<a class="remove"> x </a> ' + '</li>');
                     idarray.push(idselected);
+
+                    $('.remove').on('click', function () {
+                        $(this).parent().remove();
+                    });
                 }
 
             });
