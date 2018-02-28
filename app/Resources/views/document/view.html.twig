@@ -409,19 +409,21 @@
             });
 
             var idarray = [];
+
             $('#btn_add').click(function () {
                 var selected = $('#user_add').find('option:selected').text();
                 var idselected = $('#user_add').val();
 
                 if (idarray.indexOf(idselected) === -1) {
-                    $("#useradd").append('<li  class="user-add-row">' + selected + '<a class="remove"> x </a> ' + '</li>');
+                    $("#useradd").append('<li class="user-add-row">' + selected + ' &nbsp; <a class="user-relation-remove" data-user-id="' + idselected + '"><span class="icon-remove grey"></span></a>' + '</li>');
                     idarray.push(idselected);
-
-                    $('.remove').on('click', function () {
-                        $(this).parent().remove();
-                    });
                 }
 
+            });
+
+            $('body').on('click', '.user-relation-remove', function () {
+                idarray.splice(idarray.indexOf($(this).data('user-id')), 1);
+                $(this).parent().remove();
             });
 
         });
