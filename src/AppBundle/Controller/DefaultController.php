@@ -33,6 +33,12 @@ class DefaultController extends Controller
 
         $session = $request->getSession();
 
+        if ($this->getParameter('is_demo') === true) {
+            $session->set('demo', true);
+        } else {
+            $session->set('demo', false);
+        }
+
         $usr = new User();
 
         $loginForm = $this->createFormBuilder($usr)
@@ -62,8 +68,8 @@ class DefaultController extends Controller
                 $user->setSessionTimestamp(time());
                 $man->flush();
 
-                $session->set('customer_disk_limit', '100');
-                $session->set('customer_user_limit', '100');
+                $session->set('customer_disk_limit', '100000');
+                $session->set('customer_user_limit', '100000');
 
                 $session->set('user_id', $user->getUserId());
                 $session->set('user_name', $user->getUserName());
@@ -88,7 +94,7 @@ class DefaultController extends Controller
             array(
                 'loginForm' => $loginForm->createView(),
                 'login_failed' => $login_failed,
-                'demo' => ''
+                'demo' => $this->getParameter('is_demo')
             ));
     }
 
