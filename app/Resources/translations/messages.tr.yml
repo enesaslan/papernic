@@ -155,3 +155,5 @@ optional: İsteğe Bağlı
 reset_sort_order: Sırala (En Yeni)
 user_permisssions: Kullanıcı Yetkileri
 recent_10_documents_by_user: Kullanıcının Eklediği Son 10 Doküman
+user_relations: Kullanıcı İlişkilendirme
+add: Ekle
